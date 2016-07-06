@@ -1,0 +1,109 @@
+﻿<div id="UpdateServicesModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Update Services</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="frmUpdateService" role="form" method="post">
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                            <label for="txtService" class="control-label">Service</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                            <input type="text" class="form-control" name="txtService" id="txtService" placeholder="Service Description">
+                            <input type="hidden" name="hidServiceID" id="hidServiceID" value="">
+                        </div>
+                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                            <button type="button" id="btnUpdateService" class="btn btn-primary">Update</button>
+                        </div>
+                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                            <button type="button" id="btnDeleteService" class="btn btn-primary">Delete</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div id="divAlertBoxUpdateS">
+                            <div id="divAlertMsgTextUpdateS">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="AddServicesModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Services</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="frmAddService" role="form" method="post">
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                            <label for="txtServiceDesc" class="control-label">Service Description</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
+                            <input type="text" class="form-control" name="txtServiceDesc" id="txtServiceDesc" placeholder="Service Description">
+                        </div>
+                        <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
+                            <button type="button" id="btnAddServiceModal" class="btn btn-primary">Add</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div id="divAlertBoxAdd">
+                            <div id="divAlertMsgTextAdd">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+    </div>
+    <div class="col-xs-12 col-sm-2 col-md-1 col-lg-1">
+        <button type="button" id="btnAddService" class="btn btn-primary">Add Service</button>
+    </div>
+</div>
+<br />
+
+
+<div class="panel panel-primary">
+    <div class="panel-heading"><h4>Services</h4></div>
+    <div class="panel-body">
+
+        <div class="row">
+            <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 Heading">
+                Services
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 Heading">
+                Action
+            </div>
+        </div>
+
+        {{#each Services}}
+        {{#everyOther @index 2 }}
+        <div id="row" class="row rowAltColor">
+            {{else}}
+            <div id="row" class="row">
+                {{/everyOther}}
+                <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 serviceDesc">
+                    {{ServiceDesc}}
+                </div>
+                <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2">
+                    <a href="#" class="UpdateServices" id="{{ServiceID}}">Update</a>
+                </div>
+            </div>
+
+            {{/each}}
+        </div>

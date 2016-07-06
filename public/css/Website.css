@@ -1,0 +1,86 @@
+﻿body {
+    background-color:#3a3a3a;
+}
+
+.divLoadingGif {
+    background-image: url('/images/ajax-loader.gif');
+    background-repeat: no-repeat;
+    display: block;
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+}
+
+.AppointPanel{
+    margin-bottom: 8px;
+}
+
+.AppointPanelHeader{
+    padding: 1px 15px;
+}
+    
+.AppointBody{
+    padding:2px;
+}
+
+.Appointxt{
+    height:20px;
+    padding:2px;
+    margin-bottom:0px;
+}
+
+.lblAppoint
+{
+    font-size:12px;
+    margin-bottom:2px;
+}
+
+.AppointOuterBody
+{
+    padding:8px
+}
+
+.backgroundred{
+    background-color:red;
+}
+
+.backgroundgreen{
+    background-color:green;
+}
+
+.backgroundyellow{
+    background-color:yellow;
+}
+
+.rowAltColor{
+    background-color: #D8D8D8;
+}
+
+
+.Heading
+{
+    font-size:14px;
+    font-weight:600;
+}
+
+
+.container
+{
+    min-width:460px;
+}
+
+
+
+
+.thumbnail {margin-bottom:6px;}
+
+.carousel-control.left,.carousel-control.right{
+  background-image:none;
+  margin-top:10%;
+  width:5%;
+}
+
+.dogrowclass:hover{
+   background-color:#B8AFAD;
+   cursor:pointer;
+}

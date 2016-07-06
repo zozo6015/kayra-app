@@ -1,0 +1,2 @@
+$(function () { var t = $("#demo1").slippry({}); $(".stop").click(function () { t.stopAuto() }), $(".start").click(function () { t.startAuto() }), $(".prev").click(function () { return t.goToPrevSlide(), !1 }), $(".next").click(function () { return t.goToNextSlide(), !1 }), $(".reset").click(function () { return t.destroySlider(), !1 }), $(".reload").click(function () { return t.reloadSlider(), !1 }), $(".init").click(function () { return t = $("#demo1").slippry(), !1 }) });
+

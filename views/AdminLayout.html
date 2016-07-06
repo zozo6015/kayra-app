@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Salon Kayra</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <!--CSS-->
+    <link href="/css/Bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/website.css" rel="stylesheet" />
+    <link href="/css/Bootstrap/Validator/bootstrapValidator.min.css" rel="stylesheet" />
+    <link href="/css/Bootstrap/Select/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="/css/Bootstrap/DatePicker/datepicker.min.css" rel="stylesheet" />
+
+    <!--Script files-->
+    <script src="/Scripts/jquery-1.11.3.min.js"></script>
+    <script src="/Scripts/jquery.easing.1.3.js"></script>
+    <script src="/Scripts/Bootstrap/bootstrap.min.js"></script>
+    <script src="/Scripts/Bootstrap/Validator/bootstrapValidator.min.js"></script>
+    <script src="/Scripts/Bootstrap/Select/bootstrap-select.min.js"></script>
+    <script src="/Scripts/moment.min.js"></script>
+    <script src="/Scripts/Bootstrap/bootstrap-datetimepicker.min.js"></script>
+    <script src="/Scripts/en-gb.js"></script>
+    <script src="/Scripts/WebSite.js"></script>
+    
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="height:30px;">
+                &nbsp;
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="height:100px; text-align:center">
+                <div style="font-family:'Bell MT'; font-size:26pt; vertical-align:middle; color:#DCDCDC">
+                    <!--Salon Kayra-->
+                </div>
+            </div>
+        </div>
+
+
+
+        <ul class="nav nav-tabs">
+            <!--{{#ifCond MenuActive  'AdminHome' }}
+            <li class="active"><a href="/AdminHome">Home</a></li>
+            {{else}}
+            <li><a href="/AdminHome">Home</a></li>
+            {{/ifCond}}-->
+            {{#ifCond MenuActive  'AdminUsers' }}
+            <li class="dropdown active">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Users
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="/AddUsers">Add</a></li>
+                    <li><a href="/EditUsers">Edit</a></li>
+                    <li><a href="/DeleteUser">Delete</a></li>
+                </ul>
+            </li>
+            {{else}}
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Users
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="/AddUsers">Add</a></li>
+                    <li><a href="/EditUsers">Edit</a></li>
+                    <li><a href="/DeleteUser">Delete</a></li>
+                </ul>
+            </li>
+            {{/ifCond}}
+            {{#ifCond MenuActive  'Appointments' }}
+            <li class="active"><a href="/Appointments">Appointments</a></li>
+            {{else}}
+            <li><a href="/Appointments">Appointments</a></li>
+            {{/ifCond}}
+            {{#ifCond MenuActive  'Profile' }}
+            <li class="active"><a href="/Profile">Dog Profile</a></li>
+            {{else}}
+            <li><a href="/Profile">Dog Profile</a></li>
+            {{/ifCond}}
+            {{#ifCond MenuActive  'Config' }}
+            <li class="active"><a href="/Config">Configuration</a></li>
+            {{else}}
+            <li><a href="/Config">Configuration</a></li>
+            {{/ifCond}}
+        </ul>
+        {{{body}}}
+    </div>
+</body>
+</html>

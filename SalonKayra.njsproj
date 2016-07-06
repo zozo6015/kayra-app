@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <Name>SalonKayra</Name>
+    <RootNamespace>SalonReya</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0bb6fa51-2892-43d5-a924-9ce386322366}</ProjectGuid>
+    <ProjectHome>
+    </ProjectHome>
+    <StartupFile>
+    </StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <ProjectView>ShowAllFiles</ProjectView>
+    <NodejsPort>1337</NodejsPort>
+    <StartWebBrowser>true</StartWebBrowser>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="app.js" />
+    <Compile Include="models\da.js" />
+    <Compile Include="public\Scripts\Bootstrap\bootstrap-datetimepicker.min.js" />
+    <Compile Include="public\Scripts\Bootstrap\bootstrap.js" />
+    <Compile Include="public\Scripts\Bootstrap\bootstrap.min.js" />
+    <Compile Include="public\Scripts\Bootstrap\DatePicker\bootstrap-datepicker.min.js" />
+    <Compile Include="public\Scripts\Bootstrap\DatePicker\bootstrap-datetimepicker.min.js" />
+    <Compile Include="public\Scripts\Bootstrap\Select\bootstrap-select.js" />
+    <Compile Include="public\Scripts\Bootstrap\Select\bootstrap-select.min.js" />
+    <Compile Include="public\Scripts\Bootstrap\Slider\docs.min.js" />
+    <Compile Include="public\Scripts\Bootstrap\Slider\jssor.slider.mini.js" />
+    <Compile Include="public\Scripts\Bootstrap\Validator\bootstrapValidator.min.js" />
+    <Compile Include="public\Scripts\en-gb.js" />
+    <Compile Include="public\Scripts\handlebars.js" />
+    <Compile Include="public\Scripts\jquery-1.11.3.min.js" />
+    <Compile Include="public\Scripts\jquery-1.9.0.intellisense.js" />
+    <Compile Include="public\Scripts\jquery-ui.js" />
+    <Compile Include="public\Scripts\jquery.easing.1.3.js" />
+    <Compile Include="public\Scripts\moment.min.js" />
+    <Compile Include="public\Scripts\slippry-demo.js" />
+    <Compile Include="public\Scripts\slippry.min.js" />
+    <Compile Include="public\Scripts\WebSite.js" />
+    <Compile Include="routes\main.js" />
+    <Content Include="package.json" />
+    <Content Include="public\css\Bootstrap\bootstrap-theme.css" />
+    <Content Include="public\css\Bootstrap\bootstrap-theme.css.map" />
+    <Content Include="public\css\Bootstrap\bootstrap-theme.min.css" />
+    <Content Include="public\css\Bootstrap\bootstrap.css" />
+    <Content Include="public\css\Bootstrap\bootstrap.css.map" />
+    <Content Include="public\css\Bootstrap\bootstrap.min.css" />
+    <Content Include="public\css\Bootstrap\DatePicker\datepicker.min.css" />
+    <Content Include="public\css\Bootstrap\Select\bootstrap-select.css" />
+    <Content Include="public\css\Bootstrap\Select\bootstrap-select.css.map" />
+    <Content Include="public\css\Bootstrap\Select\bootstrap-select.min.css" />
+    <Content Include="public\css\Bootstrap\SpinEdit\bootstrap-spinedit.css" />
+    <Content Include="public\css\Bootstrap\Validator\bootstrapValidator.min.css" />
+    <Content Include="public\css\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="public\css\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="public\css\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="public\css\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="public\css\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="public\css\Website.css" />
+    <Content Include="public\Scripts\Bootstrap\Select\bootstrap-select.js.map" />
+    <Content Include="README.md" />
+    <Content Include="views\AdminLayout.html" />
+    <Content Include="views\Admin\AddUsers.html" />
+    <Content Include="views\Admin\Config.html" />
+    <Content Include="views\Admin\DeleteUser.html" />
+    <Content Include="views\Admin\Profile.html" />
+    <Content Include="views\Appointments.html" />
+    <Content Include="views\Admin\EditUsers.html" />
+    <Content Include="views\Admin\Home.html" />
+    <Content Include="views\error.html" />
+    <Content Include="views\layout.html" />
+    <Content Include="views\login.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="models\" />
+    <Folder Include="public\" />
+    <Folder Include="public\css\" />
+    <Folder Include="public\css\Bootstrap\" />
+    <Folder Include="public\css\Bootstrap\DatePicker\" />
+    <Folder Include="public\css\Bootstrap\Select\" />
+    <Folder Include="public\css\Bootstrap\SpinEdit\" />
+    <Folder Include="public\css\Bootstrap\Validator\" />
+    <Folder Include="public\css\fonts\" />
+    <Folder Include="public\images\" />
+    <Folder Include="public\Scripts\" />
+    <Folder Include="public\Scripts\Bootstrap\" />
+    <Folder Include="public\Scripts\Bootstrap\DatePicker\" />
+    <Folder Include="public\Scripts\Bootstrap\Select\" />
+    <Folder Include="public\Scripts\Bootstrap\Slider\" />
+    <Folder Include="public\Scripts\Bootstrap\Validator\" />
+    <Folder Include="routes\" />
+    <Folder Include="views\" />
+    <Folder Include="views\Admin\" />
+    <Folder Include="views\Groomer\" />
+  </ItemGroup>
+  <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
