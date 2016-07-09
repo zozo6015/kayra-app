@@ -57,64 +57,86 @@
 
     $('.updateAppointment').on("click", function () {
         $('#divLoadingGif').addClass("divLoadingGif");
+        var oneSelected = 0;
+        $('input[type=checkbox]').each(function () {
+            if (this.checked) {
+                oneSelected = oneSelected + 1
+            }
+        });
+
         var AppointmentID = $("#hidDogAppointmentID").val();
 
         var StartDate = $('#startDate').val();
         var EndDate = $('#endDate').val();
         var AppNote = $("#txtNotes").val();
 
-        var parameters = { AppointmentID: AppointmentID, StartDate: StartDate, EndDate: EndDate, AppNote: AppNote };
+        if (oneSelected == 0) {
+            alert("Please select atleast one service!");
+            $('#divLoadingGif').removeClass("divLoadingGif");
+        }
+        else if (StartDate == '') {
+            alert("Start date can not be empty!");
+            $('#divLoadingGif').removeClass("divLoadingGif");
+        }
+        else if (EndDate == '') {
+            alert("End date can not be empty!");
+            $('#divLoadingGif').removeClass("divLoadingGif");
+        }
+        else {
 
-        $.post('/UpdateAppointment', parameters)
-            .done(function (data) {
-                if (data.AppointmentsUpdateResluts[0].Result == "Success") {
-                    $('input[type=checkbox]').each(function () {
-                        if (this.checked) {
+            var parameters = { AppointmentID: AppointmentID, StartDate: StartDate, EndDate: EndDate, AppNote: AppNote };
 
-                            var parameters = { AppointmentID: AppointmentID, ServiceID: $(this).val() };
+            $.post('/UpdateAppointment', parameters)
+                .done(function (data) {
+                    if (data.AppointmentsUpdateResluts[0].Result == "Success") {
+                        $('input[type=checkbox]').each(function () {
+                            if (this.checked) {
 
-                            $.post('/AddDogService', parameters)
-                            .done(function (data1) {
-                                if (data1.Result[0].Result > 0) {
+                                var parameters = { AppointmentID: AppointmentID, ServiceID: $(this).val() };
 
-                                    $("#divAlertBox").css("display", "block");
-                                    $("#divAlertMsgText").html("Appointment updated successfully!");
-                                    $("#divAlertBox").removeClass("alert alert-danger");
-                                    $("#divAlertBox").addClass("alert alert-success");
+                                $.post('/AddDogService', parameters)
+                                .done(function (data1) {
+                                    if (data1.Result[0].Result > 0) {
 
-                                    setTimeout(function () {
-                                        window.location.assign("Appointments");
-                                    }, 2000);
+                                        $("#divAlertBox").css("display", "block");
+                                        $("#divAlertMsgText").html("Appointment updated successfully!");
+                                        $("#divAlertBox").removeClass("alert alert-danger");
+                                        $("#divAlertBox").addClass("alert alert-success");
 
-                                }
-                                else {
-                                    $("#divAlertBox").css("display", "block");
-                                    $("#divAlertMsgText").html("Failed! Please try again or contact the site administrator");
-                                    $("#divAlertBox").removeClass("alert alert-success");
-                                    $("#divAlertBox").addClass("alert alert-danger");
-                                }
-                            })
-                            .fail(function () {
+                                        setTimeout(function () {
+                                            window.location.assign("Appointments");
+                                        }, 2000);
 
-                            })
-                            .always(function () {
-                            });
-                        }
-                    });
-                }
-                else {
-                    alert("Failed");
-                }
+                                    }
+                                    else {
+                                        $("#divAlertBox").css("display", "block");
+                                        $("#divAlertMsgText").html("Failed! Please try again or contact the site administrator");
+                                        $("#divAlertBox").removeClass("alert alert-success");
+                                        $("#divAlertBox").addClass("alert alert-danger");
+                                    }
+                                })
+                                .fail(function () {
+
+                                })
+                                .always(function () {
+                                });
+                            }
+                        });
+                    }
+                    else {
+                        alert("Failed");
+                    }
 
 
-            })
-            .fail(function () {
-                $('#divLoadingGif').removeClass("divLoadingGif");
+                })
+                .fail(function () {
+                    $('#divLoadingGif').removeClass("divLoadingGif");
 
-            })
-            .always(function () {
-                $('#divLoadingGif').removeClass("divLoadingGif");
-            });
+                })
+                .always(function () {
+                    $('#divLoadingGif').removeClass("divLoadingGif");
+                });
+        }
     });
 
     $('#btnCancelAppointment').on("click", function () {
@@ -125,8 +147,7 @@
 
         $.post('/DeleteAppointment', parameters)
         .done(function (data) {
-            if (data[0].Result == 'Success')
-            {
+            if (data[0].Result == 'Success') {
                 $("#divAlertBox").css("display", "block");
                 $("#divAlertMsgText").html("Appointment successfully deleted!");
                 $("#divAlertBox").removeClass("alert alert-danger");
@@ -138,8 +159,7 @@
                     });
                 }, 1300);
             }
-            else
-            {
+            else {
                 $("#divAlertBox").css("display", "block");
                 $("#divAlertMsgText").html("An error occurred!");
                 $("#divAlertBox").addClass("alert alert-danger");

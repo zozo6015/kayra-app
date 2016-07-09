@@ -23,93 +23,125 @@
         var FB = $("#txtFB").val();
         var Notes = $("#txtNotes").val();
 
-        var parameters = { DogBreed: DogBreed, DogName: DogName, FirstName: FirstName, Surname: Surname, TelNo: TelNo, Email: Email, FB: FB, Notes: Notes };
+        if (DogBreed == '') {
+            $("#divAlertBox").css("display", "block");
+            $("#divAlertMsgText").html("Dog breed cannot be empty");
+            $("#divAlertBox").removeClass("alert alert-success");
+            $("#divAlertBox").addClass("alert alert-danger");
+            $('#divLoadingGif').removeClass("divLoadingGif");
+        }
+        else if (DogName == '') {
+            $("#divAlertBox").css("display", "block");
+            $("#divAlertMsgText").html("Dog name cannot be empty");
+            $("#divAlertBox").removeClass("alert alert-success");
+            $("#divAlertBox").addClass("alert alert-danger");
+            $('#divLoadingGif').removeClass("divLoadingGif");
+        }
+        else if (FirstName) {
+            $("#divAlertBox").css("display", "block");
+            $("#divAlertMsgText").html("First name cannot be empty");
+            $("#divAlertBox").removeClass("alert alert-success");
+            $("#divAlertBox").addClass("alert alert-danger");
+            $('#divLoadingGif').removeClass("divLoadingGif");
+        }
+        else if (Email) {
+            $("#divAlertBox").css("display", "block");
+            $("#divAlertMsgText").html("Email can not be empty");
+            $("#divAlertBox").removeClass("alert alert-success");
+            $("#divAlertBox").addClass("alert alert-danger");
+            $('#divLoadingGif').removeClass("divLoadingGif");
+        }
+        else {
 
-        $.post('/AddDogProfile', parameters)
-            .done(function (data) {
-                DogID = data.Result[0].Result;
-                AppointmentDogID = DogID;
-                if (data.Result[0].Result > 0) {
-
-                    var files = $("#upload-input").get(0).files;
-
-                    if (files.length > 0) {
-                        // create a FormData object which will be sent as the data payload in the
-                        // AJAX request
-                        var formData = new FormData();
-
-                        // loop through all the selected files and add them to the formData object
-                        for (var i = 0; i < files.length; i++) {
-                            var file = files[i];
-
-                            // add the files to formData object for the data payload
-                            formData.append('uploads[]', file, file.name);
-                        }
-                        formData.append('DogID', DogID);
 
 
-                        $.ajax({
-                            url: '/uploadImage',
-                            type: 'POST',
-                            data: formData,
-                            processData: false,
-                            contentType: false,
-                            success: function (data) {
-                                console.log('upload successful!\n' + data);
-                            },
-                            xhr: function () {
-                                // create an XMLHttpRequest
-                                var xhr = new XMLHttpRequest();
+            var parameters = { DogBreed: DogBreed, DogName: DogName, FirstName: FirstName, Surname: Surname, TelNo: TelNo, Email: Email, FB: FB, Notes: Notes };
 
-                                // listen to the 'progress' event
-                                xhr.upload.addEventListener('progress', function (evt) {
+            $.post('/AddDogProfile', parameters)
+                .done(function (data) {
+                    DogID = data.Result[0].Result;
+                    AppointmentDogID = DogID;
+                    if (data.Result[0].Result > 0) {
 
-                                    if (evt.lengthComputable) {
-                                        // calculate the percentage of upload completed
-                                        var percentComplete = evt.loaded / evt.total;
-                                        percentComplete = parseInt(percentComplete * 100);
+                        var files = $("#upload-input").get(0).files;
 
-                                        // update the Bootstrap progress bar with the new percentage
-                                        $('.progress-bar').text(percentComplete + '%');
-                                        $('.progress-bar').width(percentComplete + '%');
+                        if (files.length > 0) {
+                            // create a FormData object which will be sent as the data payload in the
+                            // AJAX request
+                            var formData = new FormData();
 
-                                        // once the upload reaches 100%, set the progress bar text to done
-                                        if (percentComplete === 100) {
-                                            $('.progress-bar').html('Done');
-                                        }
-                                    }
+                            // loop through all the selected files and add them to the formData object
+                            for (var i = 0; i < files.length; i++) {
+                                var file = files[i];
 
-                                }, false);
-
-                                return xhr;
+                                // add the files to formData object for the data payload
+                                formData.append('uploads[]', file, file.name);
                             }
-                        });
+                            formData.append('DogID', DogID);
+
+
+                            $.ajax({
+                                url: '/uploadImage',
+                                type: 'POST',
+                                data: formData,
+                                processData: false,
+                                contentType: false,
+                                success: function (data) {
+                                    console.log('upload successful!\n' + data);
+                                },
+                                xhr: function () {
+                                    // create an XMLHttpRequest
+                                    var xhr = new XMLHttpRequest();
+
+                                    // listen to the 'progress' event
+                                    xhr.upload.addEventListener('progress', function (evt) {
+
+                                        if (evt.lengthComputable) {
+                                            // calculate the percentage of upload completed
+                                            var percentComplete = evt.loaded / evt.total;
+                                            percentComplete = parseInt(percentComplete * 100);
+
+                                            // update the Bootstrap progress bar with the new percentage
+                                            $('.progress-bar').text(percentComplete + '%');
+                                            $('.progress-bar').width(percentComplete + '%');
+
+                                            // once the upload reaches 100%, set the progress bar text to done
+                                            if (percentComplete === 100) {
+                                                $('.progress-bar').html('Done');
+                                            }
+                                        }
+
+                                    }, false);
+
+                                    return xhr;
+                                }
+                            });
+
+                        }
+
+                        $("#divAlertBox").css("display", "block");
+                        $("#divAlertMsgText").html("Dog profile added successfully!");
+                        $("#divAlertBox").removeClass("alert alert-danger");
+                        $("#divAlertBox").addClass("alert alert-success");
+                        $("#frmAddDogProfile").bootstrapValidator('resetForm', true);
+                        $('#btnAddDogProfileAppointment').prop('disabled', false);
 
                     }
+                    else {
+                        $("#divAlertBox").css("display", "block");
+                        $("#divAlertMsgText").html("Failed! Please try again or contact the site administrator");
+                        $("#divAlertBox").removeClass("alert alert-success");
+                        $("#divAlertBox").addClass("alert alert-danger");
+                    }
+                })
+                .fail(function () {
+                    $('#divLoadingGif').removeClass("divLoadingGif");
 
-                    $("#divAlertBox").css("display", "block");
-                    $("#divAlertMsgText").html("Dog profile added successfully!");
-                    $("#divAlertBox").removeClass("alert alert-danger");
-                    $("#divAlertBox").addClass("alert alert-success");
-                    $("#frmAddDogProfile").bootstrapValidator('resetForm', true);
-                    $('#btnAddDogProfileAppointment').prop('disabled', false);
-
-                }
-                else {
-                    $("#divAlertBox").css("display", "block");
-                    $("#divAlertMsgText").html("Failed! Please try again or contact the site administrator");
-                    $("#divAlertBox").removeClass("alert alert-success");
-                    $("#divAlertBox").addClass("alert alert-danger");
-                }
-            })
-            .fail(function () {
-                $('#divLoadingGif').removeClass("divLoadingGif");
-
-            })
-            .always(function () {
-                $('#divLoadingGif').removeClass("divLoadingGif");
-            });
-
+                })
+                .always(function () {
+                    $('#divLoadingGif').removeClass("divLoadingGif");
+                });
+        }
     });
 
     $('#btnAddDogProfileAppointment').on("click", function () {
@@ -159,15 +191,14 @@
         var DogID = this.id;
         DogIDArr = DogID.split('-');
         DogID = DogIDArr[1];
-        
+
         DisplayDogProfile(DogID);
 
     });
 
 
 
-    function DisplayDogProfile(DogID)
-    {
+    function DisplayDogProfile(DogID) {
         $(".updateModal").html("");
         $(".addModal").html("");
         $("#imagethumbsupdate").html("");
@@ -220,7 +251,7 @@
             });
         })
         .fail(function () {
-           
+
 
         })
         .always(function () {
@@ -249,7 +280,7 @@
         });
     }
 
-    
+
 
     $('#btnSearchProfile').on("click", function () {
         var DogName = $('#txtSearchDogName').val();
@@ -257,7 +288,7 @@
         var FirstName = $('#txtSearchOwnerFirst').val();
         var Surname = $('#txtSearchOwnerSurname').val();
         var Email = $('#txtSearchEmail').val();
-       
+
         //window.location.assign("SearchDog");
 
         window.location.assign("/SearchDog?DogName=" + DogName + "&Bread=" + Bread + "&FirstName=" + FirstName + "&Surname=" + Surname + "&Email=" + Email);
@@ -274,102 +305,130 @@
         var Email = $('#txtUpdateEmail').val();
         var Facebook = $('#txtUpdateFB').val();
         var Notes = $('#txtUpdateNotes').val();
-        var parameters = { DogID: DogID, DogBreed: DogBreed, DogName: DogName, OwnerFirstName: OwnerFirstName, OwnerSurname: OwnerSurname, TelNo: TelNo, Email: Email, Facebook: Facebook, Notes: Notes };
-
-        $.post('/UpdateDogProfile', parameters)
-        .done(function (data) {
-            var Result = data.Result[0];
-
-            if (Result.Result == 'Success') {
-                $("#divAlertBoxUpdate").css("display", "block");
-                $("#divAlertMsgTextUpdate").html("Dog profile updated successfully!");
-                $("#divAlertBoxUpdate").removeClass("alert alert-danger");
-                $("#divAlertBoxUpdate").addClass("alert alert-success");
-                $("#frmUpdateDogProfile").bootstrapValidator('resetForm', true);
-
-                var files = $("#upload-inputUpdate").get(0).files;
-
-                if (files.length > 0) {
-                    // create a FormData object which will be sent as the data payload in the
-                    // AJAX request
-                    var formData = new FormData();
-
-                    // loop through all the selected files and add them to the formData object
-                    for (var i = 0; i < files.length; i++) {
-                        var file = files[i];
-                        // add the files to formData object for the data payload
-                        formData.append('uploadsUpdate[]', file, file.name);
-                    }
-
-                    formData.append('DogID', DogID);
 
 
-                    $.ajax({
-                        url: '/uploadImage',
-                        type: 'POST',
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        success: function (data) {
-                            console.log('upload successful!\n' + data);
-                        },
-                        xhr: function () {
-                            // create an XMLHttpRequest
-                            var xhr = new XMLHttpRequest();
+        if (DogBreed == '') {
+            $("#divAlertBoxUpdate").css("display", "block");
+            $("#divAlertMsgTextUpdate").html("Dog bread cannot be empty");
+            $("#divAlertBoxUpdate").removeClass("alert alert-success");
+            $("#divAlertBoxUpdate").addClass("alert alert-danger");
+        }
+        else if (DogName == '') {
+            $("#divAlertBoxUpdate").css("display", "block");
+            $("#divAlertMsgTextUpdate").html("Dog name cannot be empty");
+            $("#divAlertBoxUpdate").removeClass("alert alert-success");
+            $("#divAlertBoxUpdate").addClass("alert alert-danger");
 
-                            // listen to the 'progress' event
-                            xhr.upload.addEventListener('progress', function (evt) {
+        } else if (OwnerFirstName == '') {
+            $("#divAlertBoxUpdate").css("display", "block");
+            $("#divAlertMsgTextUpdate").html("Owner first name cannot be empty");
+            $("#divAlertBoxUpdate").removeClass("alert alert-success");
+            $("#divAlertBoxUpdate").addClass("alert alert-danger");
 
-                                if (evt.lengthComputable) {
-                                    // calculate the percentage of upload completed
-                                    var percentComplete = evt.loaded / evt.total;
-                                    percentComplete = parseInt(percentComplete * 100);
+        } else if (Email == '') {
+            $("#divAlertBoxUpdate").css("display", "block");
+            $("#divAlertMsgTextUpdate").html("Email cannot be empty");
+            $("#divAlertBoxUpdate").removeClass("alert alert-success");
+            $("#divAlertBoxUpdate").addClass("alert alert-danger");
+        }
+        else {
 
-                                    // update the Bootstrap progress bar with the new percentage
-                                    $('.progress-bar').text(percentComplete + '%');
-                                    $('.progress-bar').width(percentComplete + '%');
+            var parameters = { DogID: DogID, DogBreed: DogBreed, DogName: DogName, OwnerFirstName: OwnerFirstName, OwnerSurname: OwnerSurname, TelNo: TelNo, Email: Email, Facebook: Facebook, Notes: Notes };
 
-                                    // once the upload reaches 100%, set the progress bar text to done
-                                    if (percentComplete === 100) {
-                                        $('.progress-bar').html('Done');
+            $.post('/UpdateDogProfile', parameters)
+            .done(function (data) {
+                var Result = data.Result[0];
+
+                if (Result.Result == 'Success') {
+                    $("#divAlertBoxUpdate").css("display", "block");
+                    $("#divAlertMsgTextUpdate").html("Dog profile updated successfully!");
+                    $("#divAlertBoxUpdate").removeClass("alert alert-danger");
+                    $("#divAlertBoxUpdate").addClass("alert alert-success");
+                    $("#frmUpdateDogProfile").bootstrapValidator('resetForm', true);
+
+                    var files = $("#upload-inputUpdate").get(0).files;
+
+                    if (files.length > 0) {
+                        // create a FormData object which will be sent as the data payload in the
+                        // AJAX request
+                        var formData = new FormData();
+
+                        // loop through all the selected files and add them to the formData object
+                        for (var i = 0; i < files.length; i++) {
+                            var file = files[i];
+                            // add the files to formData object for the data payload
+                            formData.append('uploadsUpdate[]', file, file.name);
+                        }
+
+                        formData.append('DogID', DogID);
+
+
+                        $.ajax({
+                            url: '/uploadImage',
+                            type: 'POST',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            success: function (data) {
+                                console.log('upload successful!\n' + data);
+                            },
+                            xhr: function () {
+                                // create an XMLHttpRequest
+                                var xhr = new XMLHttpRequest();
+
+                                // listen to the 'progress' event
+                                xhr.upload.addEventListener('progress', function (evt) {
+
+                                    if (evt.lengthComputable) {
+                                        // calculate the percentage of upload completed
+                                        var percentComplete = evt.loaded / evt.total;
+                                        percentComplete = parseInt(percentComplete * 100);
+
+                                        // update the Bootstrap progress bar with the new percentage
+                                        $('.progress-bar').text(percentComplete + '%');
+                                        $('.progress-bar').width(percentComplete + '%');
+
+                                        // once the upload reaches 100%, set the progress bar text to done
+                                        if (percentComplete === 100) {
+                                            $('.progress-bar').html('Done');
+                                        }
+
                                     }
 
-                                }
+                                }, false);
 
-                            }, false);
+                                return xhr;
+                            }
+                        });
 
-                            return xhr;
-                        }
-                    });
+                    }
+
 
                 }
+                else {
+                    $("#divAlertBoxUpdate").css("display", "block");
+                    $("#divAlertMsgTextUpdate").html("Failed! Please try again or contact the site administrator");
+                    $("#divAlertBoxUpdate").removeClass("alert alert-success");
+                    $("#divAlertBoxUpdate").addClass("alert alert-danger");
+                }
+
+                setTimeout(function () {
+                    $("#divAlertBoxUpdate").fadeOut("slow", function () {
+                        window.location.assign("Profile");
+                    });
+                }, 1300);
 
 
-            }
-            else {
-                $("#divAlertBoxUpdate").css("display", "block");
-                $("#divAlertMsgTextUpdate").html("Failed! Please try again or contact the site administrator");
-                $("#divAlertBoxUpdate").removeClass("alert alert-success");
-                $("#divAlertBoxUpdate").addClass("alert alert-danger");
-            }
+            })
+            .fail(function () {
+                $('#divLoadingGifUpdate').removeClass("divLoadingGif");
 
-            setTimeout(function () {
-                $("#divAlertBoxUpdate").fadeOut("slow", function () {
-                    window.location.assign("Profile");
-                });
-            }, 1300);
+            })
+            .always(function () {
+                $('#divLoadingGifUpdate').removeClass("divLoadingGif");
+            });
 
-
-        })
-        .fail(function () {
-            $('#divLoadingGifUpdate').removeClass("divLoadingGif");
-
-        })
-        .always(function () {
-            $('#divLoadingGifUpdate').removeClass("divLoadingGif");
-        });
-
-
+        }
 
     });
 
@@ -440,60 +499,83 @@
 
 
     $('#btnSubmitAppointment').on("click", function () {
+
+        var oneSelected = 0;
+        $('input[type=checkbox]').each(function () {
+            if (this.checked) {
+                oneSelected = oneSelected + 1
+            }
+        });
+
         var DogID = $('#hidDogID').val();
         var StartDate = $('#startDate').val();
         var EndDate = $('#endDate').val();
         var AppointmentNotes = $('#txtnotes').val();
         var AppointmentID = 0;
-        var parameters = { DogID: DogID, StartDate: StartDate, EndDate: EndDate, AppointmentNotes: AppointmentNotes };
 
-        $.post('/AddAppointment', parameters)
-        .done(function (data) {
-            var Result = data.Result[0];
-            AppointmentID = Result.Result;
-            //Add Appointment service
-            $('input[type=checkbox]').each(function () {
-                if (this.checked) {
-                    var parameters = { AppointmentID: AppointmentID, ServiceID: $(this).val() };
+        if (oneSelected == 0) {
+            alert("Please select atleast one service!");
+            $('#divLoadingGif').removeClass("divLoadingGif");
+        }
+        else if (StartDate == '') {
+            alert("Start date can not be empty!");
+            $('#divLoadingGif').removeClass("divLoadingGif");
+        }
+        else if (EndDate == '') {
+            alert("End date can not be empty!");
+            $('#divLoadingGif').removeClass("divLoadingGif");
+        }
+        else {
 
-                    $.post('/AddDogService', parameters)
-                    .done(function (data1) {
-                        if (data1.Result[0].Result > 0) {
+            var parameters = { DogID: DogID, StartDate: StartDate, EndDate: EndDate, AppointmentNotes: AppointmentNotes };
 
-                            $("#divAlertBoxApp").css("display", "block");
-                            $("#divAlertMsgTextApp").html("Appointment added successfully!");
-                            $("#divAlertBoxApp").removeClass("alert alert-danger");
-                            $("#divAlertBoxApp").addClass("alert alert-success");
-                            $("#frmUpdateApp").bootstrapValidator('resetForm', true);
+            $.post('/AddAppointment', parameters)
+            .done(function (data) {
+                var Result = data.Result[0];
+                AppointmentID = Result.Result;
+                //Add Appointment service
+                $('input[type=checkbox]').each(function () {
+                    if (this.checked) {
+                        var parameters = { AppointmentID: AppointmentID, ServiceID: $(this).val() };
 
-                            setTimeout(function () {
-                                window.location.assign("Appointments");
-                            }, 2000);
+                        $.post('/AddDogService', parameters)
+                        .done(function (data1) {
+                            if (data1.Result[0].Result > 0) {
 
-                        }
-                        else {
-                            $("#divAlertBoxApp").css("display", "block");
-                            $("#divAlertMsgTextApp").html("Failed! Please try again or contact the site administrator");
-                            $("#divAlertBoxApp").removeClass("alert alert-success");
-                            $("#divAlertBoxApp").addClass("alert alert-danger");
-                        }
-                    })
-                    .fail(function () {
+                                $("#divAlertBoxApp").css("display", "block");
+                                $("#divAlertMsgTextApp").html("Appointment added successfully!");
+                                $("#divAlertBoxApp").removeClass("alert alert-danger");
+                                $("#divAlertBoxApp").addClass("alert alert-success");
+                                $("#frmUpdateApp").bootstrapValidator('resetForm', true);
 
-                    })
-                    .always(function () {
-                    });
-                }
+                                setTimeout(function () {
+                                    window.location.assign("Appointments");
+                                }, 2000);
+
+                            }
+                            else {
+                                $("#divAlertBoxApp").css("display", "block");
+                                $("#divAlertMsgTextApp").html("Failed! Please try again or contact the site administrator");
+                                $("#divAlertBoxApp").removeClass("alert alert-success");
+                                $("#divAlertBoxApp").addClass("alert alert-danger");
+                            }
+                        })
+                        .fail(function () {
+
+                        })
+                        .always(function () {
+                        });
+                    }
+                });
+            })
+            .fail(function () {
+                $('#divLoadingGif').removeClass("divLoadingGif");
+
+            })
+            .always(function () {
+                $('#divLoadingGif').removeClass("divLoadingGif");
             });
-        })
-        .fail(function () {
-            $('#divLoadingGif').removeClass("divLoadingGif");
-
-        })
-        .always(function () {
-            $('#divLoadingGif').removeClass("divLoadingGif");
-        });
-
+        }
 
     });
 
@@ -576,7 +658,7 @@
 
     /* when clicking a thumbnail */
     $(document).on('click', '.imgTitle .thumbnail', function () {
-    //$(".row .thumbnail").on('click', function () {
+        //$(".row .thumbnail").on('click', function () {
         var content = $(".carousel-inner");
 
         content.empty();
@@ -587,7 +669,7 @@
         var active = repoCopy.first();
 
         active.addClass("active");
-        
+
         content.append(repoCopy);
 
         // show the modal

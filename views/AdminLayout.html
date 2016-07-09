@@ -48,6 +48,7 @@
             {{else}}
             <li><a href="/AdminHome">Home</a></li>
             {{/ifCond}}-->
+            {{#ifCond RoleID  0 }}
             {{#ifCond MenuActive  'AdminUsers' }}
             <li class="dropdown active">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -73,6 +74,7 @@
                 </ul>
             </li>
             {{/ifCond}}
+            {{/ifCond}}
             {{#ifCond MenuActive  'Appointments' }}
             <li class="active"><a href="/Appointments">Appointments</a></li>
             {{else}}
@@ -83,10 +85,12 @@
             {{else}}
             <li><a href="/Profile">Dog Profile</a></li>
             {{/ifCond}}
+            {{#ifCond RoleID  0 }}
             {{#ifCond MenuActive  'Config' }}
             <li class="active"><a href="/Config">Configuration</a></li>
             {{else}}
             <li><a href="/Config">Configuration</a></li>
+            {{/ifCond}}
             {{/ifCond}}
         </ul>
         {{{body}}}

@@ -129,17 +129,17 @@ router.get('/GroomerHome', Authenticate, function (req, res, next) {
 });
 
 router.get('/AdminHome', Authenticate, function (req, res, next) {
-    res.render('Admin/Home', { layout: 'AdminLayout', MenuActive: 'AdminHome' });
+    res.render('Admin/Home', { layout: 'AdminLayout', MenuActive: 'AdminHome', RoleID: req.session.RoleID });
 });
 
 router.get('/AddUsers', Authenticate, function (req, res, next) {
-    res.render('Admin/AddUsers', { layout: 'AdminLayout', MenuActive: 'AdminUsers' });
+    res.render('Admin/AddUsers', { layout: 'AdminLayout', MenuActive: 'AdminUsers', RoleID: req.session.RoleID });
 });
 
 router.get('/EditUsers', Authenticate, function (req, res, next) {
 
     DA.GetAllUsers(function (UsersResluts, err) {
-        res.render('Admin/EditUsers', { layout: 'AdminLayout', MenuActive: 'AdminUsers', Users: UsersResluts });
+        res.render('Admin/EditUsers', { layout: 'AdminLayout', MenuActive: 'AdminUsers', Users: UsersResluts, RoleID: req.session.RoleID });
     });
 });
 
@@ -222,7 +222,7 @@ router.get('/Appointments', Authenticate, function (req, res, next) {
         }
     ],
     function (err) {
-        res.render('Appointments', { layout: 'AdminLayout', MenuActive: 'Appointments', Services: locals.ServicesResluts, Appointments: locals.DogAppointments });
+        res.render('Appointments', { layout: 'AdminLayout', MenuActive: 'Appointments', Services: locals.ServicesResluts, Appointments: locals.DogAppointments, RoleID: req.session.RoleID });
     });
 });
 
@@ -445,7 +445,7 @@ router.get('/SearchDog', Authenticate, function (req, res, next) {
         }
     ],
     function (err) {
-        res.render('Admin/Profile', { layout: 'AdminLayout', MenuActive: 'Profile', Services: locals.ServicesResluts, Dogs: locals.Dogs, AppHist: locals.HistResluts });
+        res.render('Admin/Profile', { layout: 'AdminLayout', MenuActive: 'Profile', Services: locals.ServicesResluts, Dogs: locals.Dogs, AppHist: locals.HistResluts, RoleID: req.session.RoleID });
     });
 
 
@@ -513,13 +513,13 @@ router.post('/GetDogHistory', Authenticate, function (req, res, next) {
 router.get('/DeleteUser', Authenticate, function (req, res, next) {
 
     DA.GetAllUsers(function (UsersResluts, err) {
-        res.render('Admin/DeleteUser', { layout: 'AdminLayout', MenuActive: 'AdminUsers', Users: UsersResluts });
+        res.render('Admin/DeleteUser', { layout: 'AdminLayout', MenuActive: 'AdminUsers', Users: UsersResluts, RoleID: req.session.RoleID });
     });
 });
 
 router.get('/Config', Authenticate, function (req, res, next) {
     DA.GetServices(function (ServicesResluts, err) {
-        res.render('Admin/Config', { layout: 'AdminLayout', MenuActive: 'Config', Services: ServicesResluts });
+        res.render('Admin/Config', { layout: 'AdminLayout', MenuActive: 'Config', Services: ServicesResluts, RoleID: req.session.RoleID });
     });
 });
 

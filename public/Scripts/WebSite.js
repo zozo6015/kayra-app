@@ -276,34 +276,44 @@
 
 
     $('#btnDelete').on("click", function () {
-        if (confirm('Are you sure you want to delete this user?')) {
-            var UserName = $("#txtUsername").val();
+        var UserName = $("#txtUsername").val();
 
-            var parameters = { UserName: UserName };
+        if (UserName != '')
+        {
 
-            $.post('/DeleteUser', parameters)
-            .done(function (data) {
-                if (data.Result[0].Result == 'Success') {
-                    $("#divAlertBox").css("display", "block");
-                    $("#divAlertMsgText").html("User deleted successfully!");
-                    $("#divAlertBox").removeClass("alert alert-danger");
-                    $("#divAlertBox").addClass("alert alert-success");
-                    $("#frmDeleteUser").bootstrapValidator('resetForm', true);
-                }
-                else {
-                    $("#divAlertBox").css("display", "block");
-                    $("#divAlertMsgText").html("Failed! Please try again or contact the site administrator");
-                    $("#divAlertBox").removeClass("alert alert-success");
-                    $("#divAlertBox").addClass("alert alert-danger");
-                }
-            })
-            .fail(function () {
-                $('#divLoadingGif').removeClass("divLoadingGif");
+            if (confirm('Are you sure you want to delete this user?')) {
+            
 
-            })
-            .always(function () {
-                $('#divLoadingGif').removeClass("divLoadingGif");
-            });
+                var parameters = { UserName: UserName };
+
+                $.post('/DeleteUser', parameters)
+                .done(function (data) {
+                    if (data.Result[0].Result == 'Success') {
+                        $("#divAlertBox").css("display", "block");
+                        $("#divAlertMsgText").html("User deleted successfully!");
+                        $("#divAlertBox").removeClass("alert alert-danger");
+                        $("#divAlertBox").addClass("alert alert-success");
+                        $("#frmDeleteUser").bootstrapValidator('resetForm', true);
+                    }
+                    else {
+                        $("#divAlertBox").css("display", "block");
+                        $("#divAlertMsgText").html("Failed! Please try again or contact the site administrator");
+                        $("#divAlertBox").removeClass("alert alert-success");
+                        $("#divAlertBox").addClass("alert alert-danger");
+                    }
+                })
+                .fail(function () {
+                    $('#divLoadingGif').removeClass("divLoadingGif");
+
+                })
+                .always(function () {
+                    $('#divLoadingGif').removeClass("divLoadingGif");
+                });
+            }
+        }
+        else
+        {
+            alert("Username can not be empty!");
         }
 
     });
