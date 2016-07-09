@@ -76,46 +76,85 @@
         var TelNo = $("#txtTelNo").val();
         var UserName = $("#txtUsername").val();
         var Pass = $("#txtPass").val();
+        var ConfPass = $("#txtConfPass").val();
         var FB = $("#txtFB").val();
         var Role = $("#ddRoles option:selected").val();
 
 
-        if ((FirstName != '') && (Email != '') && (UserName != '') && (Pass != '') && (Role != ''))
-        {
-
-        
-            var parameters = { FirstName: FirstName, Surname: Surname, Email: Email, TelNo: TelNo, UserName: UserName, Pass: Pass, FB: FB, Role: Role };
-
-            $.post('/AddUser', parameters)
-            .done(function (data) {
-                if (data.Result[0].Result == 'Success') {
-                    $("#divAlertBox").css("display", "block");
-                    $("#divAlertMsgText").html("User added successfully!");
-                    $("#divAlertBox").removeClass("alert alert-danger");
-                    $("#divAlertBox").addClass("alert alert-success");
-                }
-                else {
-                    $("#divAlertBox").css("display", "block");
-                    $("#divAlertMsgText").html("Failed! Please try again or contact the site administrator");
-                    $("#divAlertBox").removeClass("alert alert-success");
-                    $("#divAlertBox").addClass("alert alert-danger");
-                }
-            })
-            .fail(function () {
-                $('#divLoadingGif').removeClass("divLoadingGif");
-                $("#frmLogin").bootstrapValidator('resetForm', true);
-            })
-            .always(function () {
-                $('#divLoadingGif').removeClass("divLoadingGif");
-                $("#frmLogin").bootstrapValidator('resetForm', true);
-
-            });
+        if (FirstName == '') {
+            $("#divAlertBox").css("display", "block");
+            $("#divAlertMsgText").html("FirstName cannot be empty");
+            $("#divAlertBox").removeClass("alert alert-success");
+            $("#divAlertBox").addClass("alert alert-danger");
+            $('#divLoadingGifUpdate').removeClass("divLoadingGif");
+        } else if (Email == '') {
+            $("#divAlertBox").css("display", "block");
+            $("#divAlertMsgText").html("Email cannot be empty");
+            $("#divAlertBox").removeClass("alert alert-success");
+            $("#divAlertBox").addClass("alert alert-danger");
+            $('#divLoadingGifUpdate').removeClass("divLoadingGif");
+        } else if (UserName == '') {
+            $("#divAlertBox").css("display", "block");
+            $("#divAlertMsgText").html("UserName cannot be empty");
+            $("#divAlertBox").removeClass("alert alert-success");
+            $("#divAlertBox").addClass("alert alert-danger");
+            $('#divLoadingGifUpdate').removeClass("divLoadingGif");
+        } else if (Pass == '') {
+            $("#divAlertBox").css("display", "block");
+            $("#divAlertMsgText").html("Password cannot be empty");
+            $("#divAlertBox").removeClass("alert alert-success");
+            $("#divAlertBox").addClass("alert alert-danger");
+            $('#divLoadingGifUpdate').removeClass("divLoadingGif");
+        } else if (Pass != ConfPass) {
+            $("#divAlertBox").css("display", "block");
+            $("#divAlertMsgText").html("Passwords does not mach");
+            $("#divAlertBox").removeClass("alert alert-success");
+            $("#divAlertBox").addClass("alert alert-danger");
+            $('#divLoadingGifUpdate').removeClass("divLoadingGif");
+        } else if (Role == '') {
+            $("#divAlertBox").css("display", "block");
+            $("#divAlertMsgText").html("Role cannot be empty");
+            $("#divAlertBox").removeClass("alert alert-success");
+            $("#divAlertBox").addClass("alert alert-danger");
+            $('#divLoadingGifUpdate').removeClass("divLoadingGif");
         }
-        else
-        {
-            alert("Please enter required values! (*)")
-        }
+        else {
 
+
+            if ((FirstName != '') && (Email != '') && (UserName != '') && (Pass != '') && (Role != '')) {
+
+
+                var parameters = { FirstName: FirstName, Surname: Surname, Email: Email, TelNo: TelNo, UserName: UserName, Pass: Pass, FB: FB, Role: Role };
+
+                $.post('/AddUser', parameters)
+                .done(function (data) {
+                    if (data.Result[0].Result == 'Success') {
+                        $("#divAlertBox").css("display", "block");
+                        $("#divAlertMsgText").html("User added successfully!");
+                        $("#divAlertBox").removeClass("alert alert-danger");
+                        $("#divAlertBox").addClass("alert alert-success");
+                    }
+                    else {
+                        $("#divAlertBox").css("display", "block");
+                        $("#divAlertMsgText").html("Failed! Please try again or contact the site administrator");
+                        $("#divAlertBox").removeClass("alert alert-success");
+                        $("#divAlertBox").addClass("alert alert-danger");
+                    }
+                })
+                .fail(function () {
+                    $('#divLoadingGif').removeClass("divLoadingGif");
+                    $("#frmLogin").bootstrapValidator('resetForm', true);
+                })
+                .always(function () {
+                    $('#divLoadingGif').removeClass("divLoadingGif");
+                    $("#frmLogin").bootstrapValidator('resetForm', true);
+
+                });
+            }
+            else {
+                alert("Please enter required values! (*)");
+            }
+        }
     });
 
     $('#btnSearch').on("click", function () {
@@ -132,7 +171,9 @@
             var Surname = $("#txtSurname").val(data.Result[0].Surname);
             var TelNo = $("#txtTelNo").val(data.Result[0].CellNo);
             var UserName = $("#txtUsername").val(data.Result[0].Username);
+            $("#txtEmail").val(data.Result[0].Email);
             var Pass = $("#txtPass").val(data.Result[0].Password);
+            var ConfirmPass = $("#txtConfPass").val(data.Result[0].Password);
             var FB = $("#txtFB").val(data.Result[0].FacebookAcc);
             var FB = $("#txtFB").val(data.Result[0].LastLoggedIn);
             $('select[name=ddRoles]').val(data.Result[0].RoleID);
@@ -157,36 +198,77 @@
         var TelNo = $("#txtTelNo").val();
         var UserName = $("#txtUsername").val();
         var Pass = $("#txtPass").val();
+        var ConfPass = $("#txtConfPass").val();
         var FB = $("#txtFB").val();
         var Role = $("#ddRoles option:selected").val();
 
-        var parameters = { FirstName: FirstName, Surname: Surname, Email: Email, TelNo: TelNo, UserName: UserName, FB: FB, Role: Role };
-
-        $.post('/UpdateUser', parameters)
-        .done(function (data) {
-            if (data.Result[0].Result == 'Success') {
-                $("#divAlertBox").css("display", "block");
-                $("#divAlertMsgText").html("User updated successfully!");
-                $("#divAlertBox").removeClass("alert alert-danger");
-                $("#divAlertBox").addClass("alert alert-success");
-                $("#frmEditUser").bootstrapValidator('resetForm', true);
-            }
-            else {
-                $("#divAlertBox").css("display", "block");
-                $("#divAlertMsgText").html("Failed! Please try again or contact the site administrator");
-                $("#divAlertBox").removeClass("alert alert-success");
-                $("#divAlertBox").addClass("alert alert-danger");
-            }
-
-
-        })
-        .fail(function () {
+        if (FirstName == '') {
+            $("#divAlertBox").css("display", "block");
+            $("#divAlertMsgText").html("FirstName cannot be empty");
+            $("#divAlertBox").removeClass("alert alert-success");
+            $("#divAlertBox").addClass("alert alert-danger");
             $('#divLoadingGifUpdate').removeClass("divLoadingGif");
-
-        })
-        .always(function () {
+        } else if (Email == '') {
+            $("#divAlertBox").css("display", "block");
+            $("#divAlertMsgText").html("Email cannot be empty");
+            $("#divAlertBox").removeClass("alert alert-success");
+            $("#divAlertBox").addClass("alert alert-danger");
             $('#divLoadingGifUpdate').removeClass("divLoadingGif");
-        });
+        } else if (UserName == '') {
+            $("#divAlertBox").css("display", "block");
+            $("#divAlertMsgText").html("UserName cannot be empty");
+            $("#divAlertBox").removeClass("alert alert-success");
+            $("#divAlertBox").addClass("alert alert-danger");
+            $('#divLoadingGifUpdate').removeClass("divLoadingGif");
+        } else if (Pass == '') {
+            $("#divAlertBox").css("display", "block");
+            $("#divAlertMsgText").html("Password cannot be empty");
+            $("#divAlertBox").removeClass("alert alert-success");
+            $("#divAlertBox").addClass("alert alert-danger");
+            $('#divLoadingGifUpdate').removeClass("divLoadingGif");
+        } else if (Pass != ConfPass) {
+            $("#divAlertBox").css("display", "block");
+            $("#divAlertMsgText").html("Passwords does not mach");
+            $("#divAlertBox").removeClass("alert alert-success");
+            $("#divAlertBox").addClass("alert alert-danger");
+            $('#divLoadingGifUpdate').removeClass("divLoadingGif");
+        } else if (Role == '') {
+            $("#divAlertBox").css("display", "block");
+            $("#divAlertMsgText").html("Role cannot be empty");
+            $("#divAlertBox").removeClass("alert alert-success");
+            $("#divAlertBox").addClass("alert alert-danger");
+            $('#divLoadingGifUpdate').removeClass("divLoadingGif");
+        }
+        else {
+
+            var parameters = { FirstName: FirstName, Surname: Surname, Email: Email, Pass: Pass, TelNo: TelNo, UserName: UserName, FB: FB, Role: Role };
+
+            $.post('/UpdateUser', parameters)
+            .done(function (data) {
+                if (data.Result[0].Result == 'Success') {
+                    $("#divAlertBox").css("display", "block");
+                    $("#divAlertMsgText").html("User updated successfully!");
+                    $("#divAlertBox").removeClass("alert alert-danger");
+                    $("#divAlertBox").addClass("alert alert-success");
+
+                }
+                else {
+                    $("#divAlertBox").css("display", "block");
+                    $("#divAlertMsgText").html("Failed! Please try again or contact the site administrator");
+                    $("#divAlertBox").removeClass("alert alert-success");
+                    $("#divAlertBox").addClass("alert alert-danger");
+                }
+
+
+            })
+            .fail(function () {
+                $('#divLoadingGifUpdate').removeClass("divLoadingGif");
+
+            })
+            .always(function () {
+                $('#divLoadingGifUpdate').removeClass("divLoadingGif");
+            });
+        }
 
 
     });
@@ -379,7 +461,55 @@
 
     });
 
+    $("#btnForgotPassword").on("click", function () {
+        var Email = $("#txtEmail").val();
 
+        if (Email != '') {
+
+
+            var parameters = { Email: Email };
+
+            $.post('/ForgotPass', parameters)
+                .done(function (data) {
+                    alert(data.Result);
+                    if (data.Result == 'Success') {
+                        $("#divAlertBox").css("display", "block");
+                        $("#divAlertMsgText").html("You password has been sent. Please check your email!");
+                        $("#divAlertBox").removeClass("alert alert-danger");
+                        $("#divAlertBox").addClass("alert alert-success");
+
+                        setTimeout(function () {
+                            $("#divAlertBox").fadeOut("slow", function () {
+                                window.location.assign("/");
+                            });
+                        }, 5000);
+                    }
+                    else {
+                        $("#divAlertBox").css("display", "block");
+                        $("#divAlertMsgTextAdd").html("User not found, please contact the administrator!");
+                        $("#divAlertBox").addClass("alert alert-danger");
+                        $("#divAlertBox").removeClass("alert alert-success");
+                    }
+                })
+                .fail(function () {
+
+                })
+                .always(function () {
+
+                });
+        }
+        else {
+            $("#divAlertBox").css("display", "block");
+            $("#divAlertMsgText").html("Please enter an email address before submitting!");
+            $("#divAlertBox").addClass("alert alert-danger");
+            $("#divAlertBox").removeClass("alert alert-success");
+            setTimeout(function () {
+                $("#divAlertBox").fadeOut("slow", function () {
+
+                });
+            }, 2000);
+        }
+    });
 
     $('#frmUpdateService').bootstrapValidator({
         feedbackIcons: {

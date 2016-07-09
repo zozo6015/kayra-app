@@ -9,6 +9,7 @@ var formidable = require('formidable');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
 var dir = require('node-dir');
+var Mailgun = require('mailgun-js');
 
 
 hbs.registerHelper('ifCond', function (v1, v2, options) {
@@ -33,7 +34,73 @@ router.get('/', function (req, res, next) {
     res.render('login');
 });
 
-router.post('/LogUserIn',  function (req, res, next) {
+router.get('/forgotpassword', function (req, res, next) {
+    res.render('forgotpassword');
+});
+
+
+router.post('/ForgotPass', function (req, res, next) {
+    var Email = req.param("Email");
+    var locals = {};
+
+    DA.GetUserByEmailOrUsername(Email, function (LoginResluts, err) {
+        console.log(LoginResluts);
+        if (LoginResluts.length > 0) {
+            locals.Result = "Success";
+
+            var UserName = LoginResluts[0].Username;
+            var Password = LoginResluts[0].Password;
+            var API_key = 'key-cfd8f5933f8139e106f76ef1e419ccef';
+            var domain = 'kayra.ro';
+            var from = 'noreply@kayra.ro';
+            //We pass the api_key and domain to the wrapper, or it won't be able to identify + send emails
+            var mailgun = new Mailgun({ apiKey: API_key, domain: domain });
+
+            var msg = '<p>Your login details for Salon Kayra follows: </p>';
+            msg += 'Username: ' + UserName + "<br>";
+            msg += 'Password: ' + Password + "<br>";
+
+            var data = {
+                //Specify email data
+                from: from,
+                //The email to contact
+                to: Email,
+                //Subject and text data  
+                subject: 'Salon Kayra Login Details',
+                html: msg
+            }
+
+
+            //Invokes the method to send emails given the above data with the helper library
+            mailgun.messages().send(data, function (err, body) {
+                //If there is an error, render the error page
+                if (err) {
+                    res.render('error', { error: err });
+                    console.log("got an error: ", err);
+                }
+                    //Else we can greet    and leave
+                else {
+                    //Here "submitted.jade" is the view file for this landing page 
+                    //We pass the variable "email" from the url parameter in an object rendered by Jade
+                    res.render('submitted', { email: req.params.mail });
+                    console.log(body);
+                }
+            });
+
+            
+        }
+        else
+        {
+            locals.Result = "UserNotFound";
+        }
+        console.log(locals);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(locals));
+
+    });
+});
+
+router.post('/LogUserIn', function (req, res, next) {
     var Username = req.param("Username");
     var Password = req.param("Password");
     var locals = {};
@@ -376,7 +443,7 @@ router.get('/SearchDog', Authenticate, function (req, res, next) {
                 callback();
             });
         }
-        ],
+    ],
     function (err) {
         res.render('Admin/Profile', { layout: 'AdminLayout', MenuActive: 'Profile', Services: locals.ServicesResluts, Dogs: locals.Dogs, AppHist: locals.HistResluts });
     });
@@ -649,7 +716,7 @@ function Authenticate(req, res, next) {
     if (!req.session.UserID) {
         res.render('login', { Result: "Session Expired. Please login.", AlertText: "alert alert-danger", classname: "msgAllertBoxShow" });
     } else {
-        
+
         next();
     }
 
