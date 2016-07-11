@@ -1,0 +1,603 @@
+﻿<script src="/Scripts/Profile.js"></script>
+
+
+<!-- Modal -->
+<div id="ModalAddDogProfile" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add dog profile</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="frmAddDogProfile" role="form" method="post">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                            <label for="txtDogBreed" class="control-label">Dog Breed</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
+                                            <input type="text" class="form-control" name="txtDogBreed" id="txtDogBreed" placeholder="Dog Breed">
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                            <label for="txtDogName" class="control-label">Dog Name</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
+                                            <input type="text" class="form-control" name="txtDogName" id="txtDogName" placeholder="Dog Name">
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                            <label for="txtFirstname" class="control-label">Firstname</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
+                                            <input type="text" class="form-control" name="txtFirstname" id="txtFirstname" placeholder="Firstname">
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                            <label for="txtSurname" class="control-label">Surname</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
+                                            <input type="text" class="form-control" name="txtSurname" id="txtSurname" placeholder="Surname">
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                            <label for="txtTelNo" class="control-label">Tel No</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
+                                            <input type="text" class="form-control" name="txtTelNo" id="txtTelNo" placeholder="Tel No">
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                            <label for="txtEmail" class="control-label">Email</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
+                                            <input type="text" class="form-control" name="txtEmail" id="txtEmail" placeholder="Email">
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                            <label for="txtFB" class="control-label">Facebook</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
+                                            <input type="text" class="form-control" name="txtFB" id="txtFB" placeholder="Facebook">
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                            <label for="txtNotes">Notes:</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
+                                            <textarea class="form-control" rows="5" id="txtNotes"></textarea>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                            <label for="upload-input">Photo:</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
+                                            <input id="upload-input" type="file" name="uploads[]" multiple="multiple">
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-offset-2 col-sm-2 col-md-3 col-lg-3">
+                                            <button type="button" id="btnAddDogProfile" class="btn btn-primary">Add Profile</button>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+                                            <button type="button" id="btnAddDogProfileAppointment" class="btn btn-primary" disabled>Add Apointment</button>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-3 col-md-1 col-lg-1">
+                                            <div id="divLoadingGif"></div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2  col-md-6 col-lg-6">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-xs-3 col-sm-offset-2 col-sm-6 col-md-6 col-lg-6">
+                                            <div id="divAlertBox">
+                                                <div id="divAlertMsgText">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div id="myAddAppointment" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add new appointment</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-Vertical " id="frmUpdateApp" role="form" method="post">
+                    <div class="form-group">
+                        <label for="txtDogname" class="control-label">Dog Name</label>
+                        <input type="text" class="form-control" name="txtDogname" id="txtDogname" placeholder="Dog Name" disabled>
+                        <input type="hidden" name="hidDogID" id="hidDogID" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtFName" class="control-label">Client Firstname</label>
+                        <input type="text" class="form-control" name="txtFName" id="txtFName" placeholder="Firstname" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtSname" class="control-label">Client Surname</label>
+                        <input type="text" class="form-control" name="txtSname" id="txtSname" placeholder="Surname" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtTelno" class="control-label">TelNo</label>
+                        <input type="text" class="form-control" name="txtTelno" id="txtTelno" placeholder="TelNo" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtemail" class="control-label">Email</label>
+                        <input type="text" class="form-control" name="txtemail" id="txtemail" placeholder="Email" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtfb" class="control-label">Facebook</label>
+                        <input type="text" class="form-control" name="txtfb" id="txtfb" placeholder="Facebook" disabled>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            {{#each Services}}
+                            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                                <div class="checkbox">
+                                    <label><input type="checkbox" id="chkServiceNails-{{ServiceID}}" value="{{ServiceID}}">{{ServiceDesc}}</label>
+                                </div>
+                            </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ApointmentStartDate" class="control-label">Start Time</label>
+                        <div class='input-group date' id='ApointmentStartDate'>
+                            <input type='text' class="form-control" name="startDate" id="startDate" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="ApointmentEndDate" class="control-label">End Time</label>
+                        <div class='input-group date' id='ApointmentEndDate'>
+                            <input type='text' class="form-control" name="c" id="endDate" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtnotes">Notes:</label>
+                        <textarea class="form-control" rows="5" id="txtnotes"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                <button type="button" id="btnSubmitAppointment" class="btn btn-primary">Submit</button>
+                            </div>
+                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                <button type="button" id="btnCancelAppointment" class="btn btn-primary">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-3 col-sm-offset-2 col-sm-6 col-md-6 col-lg-6">
+                            <div id="divAlertBoxApp">
+                                <div id="divAlertMsgTextApp">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div id="DogHistModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">History</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-Vertical " id="frmHistory" role="form" method="post">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 Heading">
+                            Dog Name
+                        </div>
+                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 Heading">
+                            Owner
+                        </div>
+                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 Heading">
+                            Appointment Date
+                        </div>
+                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 Heading">
+                            Services
+                        </div>
+                    </div>
+                    <span id="HistSpan">
+
+                    </span>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div id="ModalUpdateDogProfile" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Update dog profile</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="frmUpdateDogProfile" role="form" method="post">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                            <label for="txtUpdateDogBreed" class="control-label">Dog Breed</label>
+                                            <input type="hidden" name="hidUpdateDogID" id="hidUpdateDogID" value="">
+
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
+                                            <input type="text" class="form-control" name="txtUpdateDogBreed" id="txtUpdateDogBreed" placeholder="Dog Breed">
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                            <label for="txtUpdateDogName" class="control-label">Dog Name</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
+                                            <input type="text" class="form-control" name="txtUpdateDogName" id="txtUpdateDogName" placeholder="Dog Name">
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                            <label for="txtUpdateFirstname" class="control-label">Firstname</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
+                                            <input type="text" class="form-control" name="txtUpdateFirstname" id="txtUpdateFirstname" placeholder="Firstname">
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                            <label for="txtUpdateSurname" class="control-label">Surname</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
+                                            <input type="text" class="form-control" name="txtUpdateSurname" id="txtUpdateSurname" placeholder="Surname">
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                            <label for="txtUpdateTelNo" class="control-label">Tel No</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
+                                            <input type="text" class="form-control" name="txtUpdateTelNo" id="txtUpdateTelNo" placeholder="Tel No">
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                            <label for="txtUpdateEmail" class="control-label">Email</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
+                                            <input type="text" class="form-control" name="txtUpdateEmail" id="txtUpdateEmail" placeholder="Email">
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                            <label for="txtUpdateFB" class="control-label">Facebook</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
+                                            <input type="text" class="form-control" name="txtUpdateFB" id="txtUpdateFB" placeholder="Facebook">
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                            <label for="txtUpdateNotes">Notes:</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
+                                            <textarea class="form-control" rows="5" id="txtUpdateNotes"></textarea>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                            <label for="upload-inputUpdate">Photo:</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
+                                            <input id="upload-inputUpdate" type="file" name="uploadsUpdate[]" multiple="multiple">
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-offset-2 col-sm-2 col-md-3 col-lg-3">
+                                            <button type="button" id="btnUpdateDogProfile" class="btn btn-primary">Update Profile</button>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
+
+                                        </div>
+                                        <div class="col-xs-12 col-sm-3 col-md-1 col-lg-1">
+                                            <div id="divLoadingGifUpdate"></div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2  col-md-6 col-lg-6">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-3 col-sm-offset-2 col-sm-6 col-md-6 col-lg-6">
+                                            <div id="divAlertBoxUpdate">
+                                                <div id="divAlertMsgTextUpdate">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Dog Images-->
+                                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="row" id="imagethumbsupdate">
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<form class="form-horizontal" id="frmAddSearch" role="form" method="post">
+
+    <div class="panel panel-primary AddSearchPanel">
+        <div class="panel-heading AddSearchPanelHeader"><h3>Filter</h3></div>
+        <div class="panel-body AddSearchFilter">
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12">
+                    <div class="row">
+                        <div class="col-xs-12  col-sm-1 col-md-2 col-lg-2">
+                        </div>
+                        <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
+                        </div>
+                        <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
+                        </div>
+                        <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
+
+                        </div>
+                        <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
+
+                        </div>
+                        <div class="col-xs-12  col-sm-3 col-md-2 col-lg-2">
+                            <button type="button" id="btnAddDP" class="btn btn-primary">Add New Profile</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        &nbsp;
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
+                            <input type="text" class="form-control" name="txtSearchDogName" id="txtSearchDogName" placeholder="Dog Name">
+                        </div>
+                        <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
+                            <input type="text" class="form-control" name="txtSearchBread" id="txtSearchBread" placeholder="Bread">
+                        </div>
+                        <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
+                            <input type="text" class="form-control" name="txtSearchOwnerFirst" id="txtSearchOwnerFirst" placeholder="Owner FirstName">
+                        </div>
+                        <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
+                            <input type="text" class="form-control" name="txtSearchOwnerSurname" id="txtSearchOwnerSurname" placeholder="Owner Surname">
+
+                        </div>
+                        <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
+                            <input type="text" class="form-control" name="txtSearchEmail" id="txtSearchEmail" placeholder="Email">
+                        </div>
+                        <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
+                            <button type="button" id="btnSearchProfile" class="btn btn-primary">Search</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12  col-sm-3">
+
+                        </div>
+                        <div class="col-xs-12  col-sm-2 col-md-1 col-lg-1">
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<div class="panel panel-primary">
+    <div class="panel-heading"><h3>Dogs</h3></div>
+    <div class="panel-body">
+        <div class="row Heading">
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                Dog Name
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                Bread
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                Owner
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                Tel No
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                Email
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                Action
+            </div>
+        </div>
+        {{#each Dogs}}
+        {{#everyOther @index 2 }}
+        <div id="row-{{DogID}}" class="row rowAltColor dogrowclass">
+            {{else}}
+            <div id="row-{{DogID}}" class="row dogrowclass">
+                {{/everyOther}}
+
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                    {{DogName}}
+                    <input type="hidden" name="hidDogProfileDogID" id="hidDogProfileDogID" value="{{DogID}}">
+                </div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                    {{DogBreed}}
+                </div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                    {{OwnerFirstName}} {{OwnerSurname}}
+                </div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                    {{TelNo}}
+                </div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                    {{Email}}
+                </div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                    {{#ifCond ../RoleID  0 }}
+                    <a href="#" class="LinkAddDogAppointment" id="LinkAddDogAppointment-{{DogID}}">Appoint</a> / <a href="#" class="DogUpdate" id="DogUpdate-{{DogID}}">Upd</a> / <a href="#" class="DogUpdateHist" id="DogHistory-{{DogID}}">Hist</a>
+                    {{else}}
+                    <a href="#" class="LinkAddDogAppointment" id="LinkAddDogAppointment-{{DogID}}">Appoint</a> / <a href="#" class="DogUpdateHist" id="DogHistory-{{DogID}}">Hist</a>
+                    {{/ifCond}}
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
+
+
+
+<!--popout image maximized-->
+<div class="hidden updateModal" id="img-repo">
+
+</div>
+
+<div class="hidden addModal" id="img-repoAdd">
+
+</div>
+
+<div class="modal" id="modal-gallery" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div id="modal-carousel" class="carousel">
+
+                    <div class="carousel-inner">
+                    </div>
+
+                    <a class="carousel-control left" href="#modal-carousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                    <a class="carousel-control right" href="#modal-carousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

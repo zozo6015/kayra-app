@@ -1,0 +1,98 @@
+﻿<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <form class="form-horizontal" id="frmDeleteUser" role="form" method="post">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h4>Delete Users</h4></div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                            <div style="margin-top:5px;">
+                                <label for="txtUsername" class="control-label">Username Or Email</label>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <div style="margin-top:5px;">
+                                <input type="text" class="form-control" name="txtUsername" id="txtUsername" placeholder="Username/Email">
+                            </div>
+                        </div>
+                        <div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
+                            <div style="margin-top:5px;">
+                                <button type="button" id="btnDelete" class="btn btn-primary">Delete</button>
+                            </div>
+                        </div>
+                        <div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
+                            <div id="divLoadingGif"></div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-3 col-sm-offset-2 col-sm-6 col-md-6 col-lg-6">
+                            <div id="divAlertBox">
+                                <div id="divAlertMsgText">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <form class="form-horizontal" id="frmUser" role="form" method="post">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h4>All Users</h4></div>
+                <div class="panel-body">
+
+                    <div class="row Heading">
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                            Firstname
+                        </div>
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                            Surname
+                        </div>
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                            Username
+                        </div>
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                            Email
+                        </div>
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                            CellNo
+                        </div>
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                            RoleDesc
+                        </div>
+                    </div>
+                    {{#each Users}}
+                    {{#everyOther @index 2 }}
+                    <div id="row" class="row rowAltColor">
+                        {{else}}
+                        <div id="row" class="row">
+                            {{/everyOther}}
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                {{Firstname}}
+                            </div>
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                {{Surname}}
+                            </div>
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                {{Username}}
+                            </div>
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                {{Email}}
+                            </div>
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                {{CellNo}}
+                            </div>
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                {{RoleDesc}}
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>

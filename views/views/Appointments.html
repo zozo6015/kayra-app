@@ -1,0 +1,272 @@
+﻿<script src="/Scripts/Appointment.js"></script>
+
+
+<div id="UpdateAppointment" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Update appointment</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="txtDogName" class="control-label">Dog Name</label>
+                    <input type="text" class="form-control" name="txtDogName" id="txtDogName" placeholder="Dog Name" disabled>
+                    <input type="hidden" name="hidDogAppointmentID" id="hidDogAppointmentID" value="">
+                </div>
+                <div class="form-group">
+                    <label for="txtFirstName" class="control-label">Client Firstname</label>
+                    <input type="text" class="form-control" name="txtFirstName" id="txtFirstName" placeholder="Firstname" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="txtSurname" class="control-label">Client Surname</label>
+                    <input type="text" class="form-control" name="txtSurname" id="txtSurname" placeholder="Surname" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="txtTelNo" class="control-label">TelNo</label>
+                    <input type="text" class="form-control" name="txtTelNo" id="txtTelNo" placeholder="TelNo" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="txtEmail" class="control-label">Email</label>
+                    <input type="text" class="form-control" name="txtEmail" id="txtEmail" placeholder="Email" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="txtFB" class="control-label">Facebook</label>
+                    <input type="text" class="form-control" name="txtFB" id="txtFB" placeholder="Facebook" disabled>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        {{#each Services}}
+
+                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                            <div class="checkbox">
+                                <label><input type="checkbox" id="chkServiceNails-{{ServiceID}}" value="{{ServiceID}}">{{ServiceDesc}}</label>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="ModalUpdateStartDate" class="control-label">Start Time</label>
+                    <div class='input-group date' data-date-format="YYYY-MM-DD hh:mm:ss" id='ApointmentStartDate'>
+                        <input type='text' class="form-control" name="startDate" id="startDate" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label for="ModalUpdateEndDate" class="control-label">End Time</label>
+                    <div class='input-group date' data-date-format="YYYY-MM-DD hh:mm:ss" id='ApointmentEndDate'>
+                        <input type='text' class="form-control" name="endDate" id="endDate" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="txtNotes">Notes:</label>
+                    <textarea class="form-control" rows="5" id="txtNotes"></textarea>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                            <button type="button" id="btnUpdateAppointment" class="btn btn-primary updateAppointment">Update</button>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                            <button type="button" id="btnCancelAppointment" class="btn btn-primary">Cancel Appointment</button>
+                        </div>
+                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                            <div id="divLoadingGif"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div id="divAlertBox">
+                                <div id="divAlertMsgText">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
+        <form class="form-Vertical " id="frmDay" role="form" method="post">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h4 id="TodayHeading">- Today</h4></div>
+                <div id="DayBody" class="panel-body AppointOuterBody">
+
+                    {{#each Appointments}}
+                    {{#ifCond this.Period  'Day' }}
+                    <div class="panel panel-default AppointPanel">
+                       
+                        <div class="panel-heading AppointPanelHeader"><h5>{{DogName}} ({{OwnerFirstName}} {{OwnerSurname}})</h5></div>
+                        <div class="panel-body AppointBody" id="weekbody">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-xs-6 col-sm-2">
+                                        <label for="txtDogN" class="control-label lblAppoint">Dog Name</label>
+                                        <input type="text" class="form-control Appointxt" name="txtDogN" id="txtDogN" placeholder="Breed" value="{{DogName}}" disabled>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-2">
+                                        <label for="txtBreed" class="control-label lblAppoint">Breed</label>
+                                        <input type="text" class="form-control Appointxt" name="txtBreed" id="txtBreed" placeholder="Breed" value="{{DogBreed}}" disabled>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-2">
+                                        <label for="txtTelNo" class="control-label lblAppoint">Tel No</label>
+                                        <input type="text" class="form-control Appointxt" name="txtTelNo" id="txtTelNo" placeholder="Tel No" value="{{TelNo}}" disabled>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-2">
+                                        <label for="txtEmail" class="control-label lblAppoint">Email</label>
+                                        <input type="text" class="form-control Appointxt" name="txtEmail" id="txtEmail" placeholder="Email" value="{{Email}}" disabled>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-2">
+                                        <label for="txtDate" class="control-label lblAppoint">Appointment Date</label>
+                                        <input type="text" class="form-control Appointxt" name="txtDate" id="txtDate" placeholder="Date" value="{{StartTime}}" disabled>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-2">
+                                        <div style="margin-top:20px">
+                                            <a href="#" class="AppViewUpdate" id="{{AppointmentID}}">Update/View</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    {{/ifCond}}
+                    {{/each}}
+
+                </div>
+            </div>
+        </form>
+
+
+        <form class="form-Vertical " id="frmWeek" role="form" method="post">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h4 id="WeekHeading">+ Week</h4></div>
+                <div id="WeekBody" class="panel-body AppointOuterBody">
+
+                    {{#each Appointments}}
+                    {{#ifCond this.Period  'Week' }}
+                    <div class="panel panel-default AppointPanel">
+                        
+                        <div class="panel-heading AppointPanelHeader"><h5>{{DogName}} ({{OwnerFirstName}} {{OwnerSurname}})</h5></div>
+                        <div class="panel-body AppointBody" id="weekbody">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-xs-6 col-sm-2">
+                                        <label for="txtDogN" class="control-label lblAppoint">Dog Name</label>
+                                        <input type="text" class="form-control Appointxt" name="txtDogN" id="txtDogN" placeholder="Breed" value="{{DogName}}" disabled>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-2">
+                                        <label for="txtBreed" class="control-label lblAppoint">Breed</label>
+                                        <input type="text" class="form-control Appointxt" name="txtBreed" id="txtBreed" placeholder="Breed" value="{{DogBreed}}" disabled>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-2">
+                                        <label for="txtTelNo" class="control-label lblAppoint">Tel No</label>
+                                        <input type="text" class="form-control Appointxt" name="txtTelNo" id="txtTelNo" placeholder="Tel No" value="{{TelNo}}" disabled>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-2">
+                                        <label for="txtEmail" class="control-label lblAppoint">Email</label>
+                                        <input type="text" class="form-control Appointxt" name="txtEmail" id="txtEmail" placeholder="Email" value="{{Email}}" disabled>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-2">
+                                        <label for="txtDate" class="control-label lblAppoint">Appointment Date</label>
+                                        <input type="text" class="form-control Appointxt" name="txtDate" id="txtDate" placeholder="Date" value="{{StartTime}}" disabled>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-2">
+                                        <div style="margin-top:20px">
+                                            <a href="#" class="AppViewUpdate" id="{{AppointmentID}}">Update/View</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        
+                    </div>
+                    {{/ifCond}}
+                    {{/each}}
+
+                </div>
+            </div>
+        </form>
+
+
+
+
+
+        <form class="form-Vertical " id="frMonth" role="form" method="post">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h4 id="MonthHeading">+ Month</h4></div>
+                <div id="MonthBody" class="panel-body AppointOuterBody">
+
+                    {{#each Appointments}}
+                    {{#ifCond this.Period  'Month' }}
+                    <div class="panel panel-default AppointPanel">
+                        
+                        <div class="panel-heading AppointPanelHeader"><h5>{{DogName}} ({{OwnerFirstName}} {{OwnerSurname}})</h5></div>
+                        <div class="panel-body AppointBody" id="weekbody">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-xs-6 col-sm-2">
+                                        <label for="txtDogN" class="control-label lblAppoint">Dog Name</label>
+                                        <input type="text" class="form-control Appointxt" name="txtDogN" id="txtDogN" placeholder="Breed" value="{{DogName}}" disabled>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-2">
+                                        <label for="txtBreed" class="control-label lblAppoint">Breed</label>
+                                        <input type="text" class="form-control Appointxt" name="txtBreed" id="txtBreed" placeholder="Breed" value="{{DogBreed}}" disabled>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-2">
+                                        <label for="txtTelNo" class="control-label lblAppoint">Tel No</label>
+                                        <input type="text" class="form-control Appointxt" name="txtTelNo" id="txtTelNo" placeholder="Tel No" value="{{TelNo}}" disabled>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-2">
+                                        <label for="txtEmail" class="control-label lblAppoint">Email</label>
+                                        <input type="text" class="form-control Appointxt" name="txtEmail" id="txtEmail" placeholder="Email" value="{{Email}}" disabled>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-2">
+                                        <label for="txtDate" class="control-label lblAppoint">Appointment Date</label>
+                                        <input type="text" class="form-control Appointxt" name="txtDate" id="txtDate" placeholder="Date" value="{{StartTime}}" disabled>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-2">
+                                        <div style="margin-top:20px">
+                                            <a href="#" class="AppViewUpdate" id="{{AppointmentID}}">Update/View</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        
+                    </div>
+                    {{/ifCond}}
+                    {{/each}}
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
