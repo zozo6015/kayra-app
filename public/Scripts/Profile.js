@@ -14,7 +14,7 @@
 
     $('#btnAddDogProfile').on("click", function () {
         $('#divLoadingGif').addClass("divLoadingGif");
-        var DogBreed = $('#txtDogBreed').val();
+        var DogBreed = $("#ddDogBreed option:selected").val();
         var DogName = $('#txtDogName').val();
         var FirstName = $("#txtFirstname").val();
         var Surname = $("#txtSurname").val();
@@ -37,14 +37,14 @@
             $("#divAlertBox").addClass("alert alert-danger");
             $('#divLoadingGif').removeClass("divLoadingGif");
         }
-        else if (FirstName) {
+        else if (FirstName == '') {
             $("#divAlertBox").css("display", "block");
             $("#divAlertMsgText").html("First name cannot be empty");
             $("#divAlertBox").removeClass("alert alert-success");
             $("#divAlertBox").addClass("alert alert-danger");
             $('#divLoadingGif').removeClass("divLoadingGif");
         }
-        else if (Email) {
+        else if (Email == '') {
             $("#divAlertBox").css("display", "block");
             $("#divAlertMsgText").html("Email can not be empty");
             $("#divAlertBox").removeClass("alert alert-success");
@@ -156,7 +156,7 @@
     });
 
     $('.dogrowclass').on("click", function () {
-        txtUpdateDogBreed.disabled = true;
+        ddUpdateDogBreed.disabled = true;
         txtUpdateDogName.disabled = true;
         txtUpdateFirstname.disabled = true;
         txtUpdateSurname.disabled = true;
@@ -178,7 +178,7 @@
     $('.DogUpdate').on("click", function (e) {
         e.stopPropagation();
 
-        txtUpdateDogBreed.disabled = false;
+        ddUpdateDogBreed.disabled = false;
         txtUpdateDogName.disabled = false;
         txtUpdateFirstname.disabled = false;
         txtUpdateSurname.disabled = false;
@@ -208,7 +208,9 @@
         $.post('/GetDogInfo', parameters)
         .done(function (data) {
             var Result = data.Result[0];
-            $('#txtUpdateDogBreed').val(Result.DogBreed);
+
+            $('select[name=ddUpdateDogBreed]').val(Result.BreedID);
+            $('.selectpicker').selectpicker('refresh');
             $('#txtUpdateDogName').val(Result.DogName);
             $('#txtUpdateFirstname').val(Result.OwnerFirstName);
             $('#txtUpdateSurname').val(Result.OwnerSurname);
@@ -284,7 +286,7 @@
 
     $('#btnSearchProfile').on("click", function () {
         var DogName = $('#txtSearchDogName').val();
-        var Bread = $('#txtSearchBread').val();
+        var Bread = $("#ddDogBreedSearch option:selected").val();
         var FirstName = $('#txtSearchOwnerFirst').val();
         var Surname = $('#txtSearchOwnerSurname').val();
         var Email = $('#txtSearchEmail').val();
@@ -297,7 +299,7 @@
 
     $('#btnUpdateDogProfile').on("click", function () {
         var DogID = $('#hidUpdateDogID').val();
-        var DogBreed = $('#txtUpdateDogBreed').val();
+        var DogBreed = $("#ddUpdateDogBreed option:selected").val(); 
         var DogName = $('#txtUpdateDogName').val();
         var OwnerFirstName = $('#txtUpdateFirstname').val();
         var OwnerSurname = $('#txtUpdateSurname').val();
@@ -637,6 +639,28 @@
         $('#' + this.id).datetimepicker({ format: 'YYYY-MM-DD hh:mm' });
     });
 
+    $(document).on('dp.change', '#ApointmentStartDate', function () {
+        var AppStartDate = new Date(document.getElementById("startDate").value);
+        var hours = AppStartDate.getHours();
+        hours = hours + 3;
+
+        AppStartDate = new Date(AppStartDate.setHours(hours));
+
+        var year = AppStartDate.getYear();
+        var month = AppStartDate.getMonth();
+        var day = AppStartDate.getDate();
+
+        var hour = AppStartDate.getHours();
+        var minute = AppStartDate.getMinutes();
+        var second = AppStartDate.getSeconds();
+        var milsec = AppStartDate.getMilliseconds();
+
+        var endtime = year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ":" + second + "." + milsec;
+
+        document.getElementById("endDate").value = endtime;
+
+        
+    });
 
     $('.upload-btn').on('click', function () {
         $('#upload-input').click();
@@ -675,6 +699,77 @@
         // show the modal
         $("#modal-gallery").modal("show");
     });
+
+
+    $("#frmAddDogProfile").submit(function () {
+        return false;
+    });
+
+    $("#frmUpdateApp").submit(function () {
+        return false;
+    });
+
+    $("#frmHistory").submit(function () {
+        return false;
+    });
+
+    $("#frmUpdateDogProfile").submit(function () {
+        return false;
+    });
+
+    $("#frmAddSearch").submit(function () {
+        return false;
+    });
+
+    $("#txtSearchDogName").keyup(function (event) {
+        if (event.keyCode == 13) {
+            $("#btnSearchProfile").click();
+        }
+    });
+
+
+    $("#txtSearchOwnerFirst").keyup(function (event) {
+        if (event.keyCode == 13) {
+            $("#btnSearchProfile").click();
+        }
+    });
+
+    $("#txtSearchOwnerSurname").keyup(function (event) {
+        if (event.keyCode == 13) {
+            $("#btnSearchProfile").click();
+        }
+    });
+
+    $("#txtSearchEmail").keyup(function (event) {
+        if (event.keyCode == 13) {
+            $("#btnSearchProfile").click();
+        }
+    });
+
+    $('#startDate').change(function () {
+        alert("hello");
+    });
+
+
+
+
+    //var AppStartDate = document.getElementById("startDate");
+
+    //AppStartDate.removeEventListener("change", EditEndDate);
+
+    
+    //AppStartDate.addEventListener('change', EditEndDate, false);
+    //alert(AppStartDate);
+
+    //function EditEndDate()
+    //{
+    //    alert("hello");
+    //}
+    
+    
+    
+    
+    
 
 
 });

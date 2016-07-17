@@ -332,6 +332,56 @@ function AddService(ServiceDesc, callback) {
     });
 }
 
+function GetBreeds(BreedID, callback)
+{
+    pool.getConnection(function (err, connection) {
+        connection.query('CALL SP_GetDogBreed(' + mysql.escape(BreedID) + ')', function (err, rows) {
+            if (err) throw err;
+            else {
+                callback(rows[0]);
+            }
+        });
+        connection.release();//release the connection
+    });
+    
+}
+
+function UpdateDogBreed(BreedID, BreedName, callback)
+{
+    pool.getConnection(function (err, connection) {
+        connection.query('CALL SP_UpdateDogBreed(' + mysql.escape(BreedID) + ', ' + mysql.escape(BreedName) + ')', function (err, rows) {
+            if (err) throw err;
+            else {
+                callback(rows[0]);
+            }
+        });
+        connection.release();//release the connection
+    });
+}
+
+function DeleteDogBreed(BreedID, callback) {
+    pool.getConnection(function (err, connection) {
+        connection.query('CALL SP_DeleteDogBreed(' + mysql.escape(BreedID) + ')', function (err, rows) {
+            if (err) throw err;
+            else {
+                callback(rows[0]);
+            }
+        });
+        connection.release();//release the connection
+    });
+}
+
+function AddDogBreed(DogBreed, callback) {
+    pool.getConnection(function (err, connection) {
+        connection.query('CALL SP_AddDogBreed(' + mysql.escape(DogBreed) + ')', function (err, rows) {
+            if (err) throw err;
+            else {
+                callback(rows[0]);
+            }
+        });
+        connection.release();//release the connection
+    });
+}
 
 
 
@@ -357,5 +407,9 @@ module.exports = {
     GetServiceByID: GetServiceByID,
     UpddateService: UpddateService,
     DeleteService: DeleteService,
-    AddService: AddService
+    AddService: AddService,
+    GetBreeds: GetBreeds,
+    UpdateDogBreed: UpdateDogBreed,
+    DeleteDogBreed: DeleteDogBreed,
+    AddDogBreed: AddDogBreed
 };

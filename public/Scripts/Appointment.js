@@ -1,5 +1,9 @@
 ﻿$(document).ready(function () {
 
+    $("#frmUpodateApp").submit(function () {
+        return false;
+    });
+
     $('.AppViewUpdate').on("click", function () {
         var AppointmentID = this.id;
 
@@ -223,4 +227,10 @@
     $('.date').on("click", function () {
         $('#' + this.id).datetimepicker({ format: 'YYYY-MM-DD hh:mm' });
     });
+
+
+
+    
+
+
 });

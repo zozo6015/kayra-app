@@ -1,5 +1,8 @@
 ﻿$(document).ready(function () {
 
+    $("#lkLogout").on("click", function () {
+        window.location.assign("LogOut");
+    });
 
     $('#btnLogin').on("click", function () {
         $('#divLoadingGif').addClass("divLoadingGif");
@@ -278,11 +281,10 @@
     $('#btnDelete').on("click", function () {
         var UserName = $("#txtUsername").val();
 
-        if (UserName != '')
-        {
+        if (UserName != '') {
 
             if (confirm('Are you sure you want to delete this user?')) {
-            
+
 
                 var parameters = { UserName: UserName };
 
@@ -311,8 +313,7 @@
                 });
             }
         }
-        else
-        {
+        else {
             alert("Username can not be empty!");
         }
 
@@ -470,6 +471,154 @@
         }
 
     });
+
+
+
+    $(".UpdateBreed").on("click", function () {
+        var BreedIDArr = this.id.split('-');
+        var BreedID = BreedIDArr[1];
+        var parameters = { BreedID: BreedID };
+
+        $.post('/GetBreedByID', parameters)
+        .done(function (data) {
+            $("#txtBreed").val(data[0].Breed);
+            $("#hidBreedID").val(data[0].ID);
+            $('#UpdateBreedModal').modal('toggle');
+            var options = {
+                "backdrop": "static"
+            }
+
+            $('#UpdateBreedModal').modal(options);
+        })
+        .fail(function () {
+
+        })
+        .always(function () {
+
+        });
+
+    });
+
+    $("#btnUpdateBreed").on("click", function () {
+        var BreedName = document.getElementById("txtBreed").value;
+        var BreedID = document.getElementById("hidBreedID").value;
+
+        var parameters = { BreedID: BreedID, BreedName: BreedName };
+
+        $.post('/UpdateDogBreed', parameters)
+            .done(function (data) {
+                if (data[0].Result == 'Success')
+                {
+                    $("#divAlertBoxUpdateBreed").css("display", "block");
+                    $("#divAlertMsgTextUpdateBreed").html("Dog breed updated successfully");
+                    $("#divAlertBoxUpdateBreed").removeClass("alert alert-danger");
+                    $("#divAlertBoxUpdateBreed").addClass("alert alert-success");
+
+                    setTimeout(function () {
+                        $("#divAlertBoxUpdateBreed").fadeOut("slow", function () {
+                            window.location.assign("/Config");
+                        });
+                    }, 2000);
+                }
+                else
+                {
+                    $("#divAlertBoxUpdateBreed").css("display", "block");
+                    $("#divAlertMsgTextUpdateBreed").html("An error occurred. Please contact the site administrator");
+                    $("#divAlertBoxUpdateBreed").addClass("alert alert-danger");
+                    $("#divAlertBoxUpdateBreed").removeClass("alert alert-success");
+                }
+            })
+            .fail(function () {
+
+            })
+            .always(function () {
+
+        });
+
+    });
+
+    $("#btnDeleteBreed").on("click", function () {
+        if (confirm('Are you sure you want to delete this dog breed?')) {
+            var BreedID = document.getElementById("hidBreedID").value;
+            var parameters = { BreedID: BreedID };
+
+            $.post('/DeletDogBreed', parameters)
+                .done(function (data) {
+                    if (data[0].Result == 'Success') {
+                        $("#divAlertBoxUpdateBreed").css("display", "block");
+                        $("#divAlertMsgTextUpdateBreed").html("Dog breed deleted successfully");
+                        $("#divAlertBoxUpdateBreed").removeClass("alert alert-danger");
+                        $("#divAlertBoxUpdateBreed").addClass("alert alert-success");
+
+                        setTimeout(function () {
+                            $("#divAlertBoxUpdateBreed").fadeOut("slow", function () {
+                                window.location.assign("/Config");
+                            });
+                        }, 2000);
+                    }
+                    else {
+                        $("#divAlertBoxUpdateBreed").css("display", "block");
+                        $("#divAlertMsgTextUpdateBreed").html("An error occurred. Please contact the site administrator");
+                        $("#divAlertBoxUpdateBreed").addClass("alert alert-danger");
+                        $("#divAlertBoxUpdateBreed").removeClass("alert alert-success");
+                    }
+                })
+                .fail(function () {
+
+                })
+                .always(function () {
+
+           });
+
+        }
+    });
+
+
+    $("#btnAddBreed").on("click", function () {
+        $('#AddBreedModal').modal('toggle');
+        var options = {
+            "backdrop": "static"
+        }
+
+        $('#AddBreedModal').modal(options);
+    });
+
+    $("#btnAddBreedModal").on("click", function () {
+        var DogBreed = document.getElementById("txtBreedDesc").value;
+
+        var parameters = { DogBreed: DogBreed };
+
+        $.post('/AddDogBreed', parameters)
+            .done(function (data) {
+                if (data[0].Result == 'Success') {
+                    $("#divAlertBoxAddBreed").css("display", "block");
+                    $("#divAlertMsgTextAddBreed").html("Dog breed addded successfully");
+                    $("#divAlertBoxAddBreed").removeClass("alert alert-danger");
+                    $("#divAlertBoxAddBreed").addClass("alert alert-success");
+
+                    setTimeout(function () {
+                        $("#divAlertBoxAddBreed").fadeOut("slow", function () {
+                            window.location.assign("/Config");
+                        });
+                    }, 2000);
+                }
+                else {
+                    $("#divAlertBoxAddBreed").css("display", "block");
+                    $("#divAlertMsgTextAddBreed").html("An error occurred. Please contact the site administrator");
+                    $("#divAlertBoxAddBreed").addClass("alert alert-danger");
+                    $("#divAlertBoxAddBreed").removeClass("alert alert-success");
+                }
+            })
+            .fail(function () {
+
+            })
+            .always(function () {
+
+        });
+    });
+    
+
+    
 
     $("#btnForgotPassword").on("click", function () {
         var Email = $("#txtEmail").val();
@@ -734,7 +883,22 @@
 
 
 
+    //Prevent a form from submiting on enter key press
+    $("#frmLogin").submit(function () {
+        return false;
+    });
 
+    $("#txtPassword").keyup(function (event) {
+        if (event.keyCode == 13) {
+            $("#btnLogin").click();
+        }
+    });
+
+    $("#txtUsername").keyup(function (event) {
+        if (event.keyCode == 13) {
+            $("#btnLogin").click();
+        }
+    });
 
 
 

@@ -22,7 +22,14 @@
                                             <label for="txtDogBreed" class="control-label">Dog Breed</label>
                                         </div>
                                         <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
-                                            <input type="text" class="form-control" name="txtDogBreed" id="txtDogBreed" placeholder="Dog Breed">
+
+                                            <select class="selectpicker" data-live-search="true" name="ddDogBreed" id="ddDogBreed">
+                                                <option value="-1">Select dog breed</option>
+                                                {{#each Breeds}}
+                                                <option value="{{ID}}">{{Breed}}</option>
+                                                {{/each}}
+                                            </select>
+                                            
                                         </div>
                                         <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
                                         </div>
@@ -208,12 +215,11 @@
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
-
                     </div>
                     <div class="form-group">
                         <label for="ApointmentEndDate" class="control-label">End Time</label>
-                        <div class='input-group date' id='ApointmentEndDate'>
-                            <input type='text' class="form-control" name="c" id="endDate" />
+                        <div class='input-group date' data-date-format="YYYY-MM-DD hh:mm:ss" id='ApointmentEndDate'>
+                            <input type='text' class="form-control" name="endDate" id="endDate" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -313,7 +319,12 @@
 
                                         </div>
                                         <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
-                                            <input type="text" class="form-control" name="txtUpdateDogBreed" id="txtUpdateDogBreed" placeholder="Dog Breed">
+                                            <select class="selectpicker" data-live-search="true" name="ddUpdateDogBreed" id="ddUpdateDogBreed">
+                                                <option value="-1">Select dog breed</option>
+                                                {{#each Breeds}}
+                                                <option value="{{ID}}">{{Breed}}</option>
+                                                {{/each}}
+                                            </select>
                                         </div>
                                         <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
                                         </div>
@@ -477,8 +488,13 @@
                         <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
                             <input type="text" class="form-control" name="txtSearchDogName" id="txtSearchDogName" placeholder="Dog Name">
                         </div>
-                        <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
-                            <input type="text" class="form-control" name="txtSearchBread" id="txtSearchBread" placeholder="Bread">
+                        <div class="col-xs-12  col-sm-3 col-md-2 col-lg-2">
+                            <select class="selectpicker" data-width="fit" data-live-search="true" name="ddDogBreedSearch" id="ddDogBreedSearch">
+                                <option value="-1">Select dog breed</option>
+                                {{#each Breeds}}
+                                <option value="{{ID}}">{{Breed}}</option>
+                                {{/each}}
+                            </select>
                         </div>
                         <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
                             <input type="text" class="form-control" name="txtSearchOwnerFirst" id="txtSearchOwnerFirst" placeholder="Owner FirstName">
@@ -491,7 +507,9 @@
                             <input type="text" class="form-control" name="txtSearchEmail" id="txtSearchEmail" placeholder="Email">
                         </div>
                         <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
-                            <button type="button" id="btnSearchProfile" class="btn btn-primary">Search</button>
+                            <div style="margin-top:5px;">
+                                <button type="button" id="btnSearchProfile" class="btn btn-primary">Search</button>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -517,19 +535,19 @@
             <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
                 Dog Name
             </div>
-            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+            <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
                 Bread
             </div>
-            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+            <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
                 Owner
             </div>
-            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+            <div class="hidden-xs col-sm-2 col-md-2 col-lg-2">
                 Tel No
             </div>
-            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+            <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2">
                 Email
             </div>
-            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+            <div class="hidden-xs col-sm-2 col-md-2 col-lg-2">
                 Action
             </div>
         </div>
@@ -544,19 +562,19 @@
                     {{DogName}}
                     <input type="hidden" name="hidDogProfileDogID" id="hidDogProfileDogID" value="{{DogID}}">
                 </div>
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
                     {{DogBreed}}
                 </div>
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
                     {{OwnerFirstName}} {{OwnerSurname}}
                 </div>
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <div class="hidden-xs col-sm-2 col-md-2 col-lg-2">
                     {{TelNo}}
                 </div>
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2">
                     {{Email}}
                 </div>
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <div class="col-xs-offset-8 col-xs-4 col-sm-offset-0 col-sm-2 col-md-2 col-lg-2">
                     {{#ifCond ../RoleID  0 }}
                     <a href="#" class="LinkAddDogAppointment" id="LinkAddDogAppointment-{{DogID}}">Appoint</a> / <a href="#" class="DogUpdate" id="DogUpdate-{{DogID}}">Upd</a> / <a href="#" class="DogUpdateHist" id="DogHistory-{{DogID}}">Hist</a>
                     {{else}}

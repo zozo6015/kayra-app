@@ -34,12 +34,23 @@ router.get('/', function (req, res, next) {
     res.render('login');
 });
 
+router.get('/LogOut', function (req, res, next) {
+    req.session.UserID = null;
+    res.render('login');
+});
+
 router.get('/forgotpassword', function (req, res, next) {
     res.render('forgotpassword');
 });
 
 
 router.post('/ForgotPass', function (req, res, next) {
+    //Password Encryption
+    var crypto = require('crypto')
+      , key = 'salt_from_the_user_document'
+      , cipher = crypto.createCipher('aes-256-cbc', key)
+      , decipher = crypto.createDecipher('aes-256-cbc', key);
+
     var Email = req.param("Email");
     var locals = {};
 
@@ -56,9 +67,13 @@ router.post('/ForgotPass', function (req, res, next) {
             //We pass the api_key and domain to the wrapper, or it won't be able to identify + send emails
             var mailgun = new Mailgun({ apiKey: API_key, domain: domain });
 
+            //Decrypting Password
+            decipher.update(encryptedPassword, 'base64', 'utf8');
+            var decryptedPassword = decipher.final('utf8');
+
             var msg = '<p>Your login details for Salon Kayra follows: </p>';
             msg += 'Username: ' + UserName + "<br>";
-            msg += 'Password: ' + Password + "<br>";
+            msg += 'Password: ' + decryptedPassword + "<br>";
 
             var data = {
                 //Specify email data
@@ -87,10 +102,9 @@ router.post('/ForgotPass', function (req, res, next) {
                 }
             });
 
-            
+
         }
-        else
-        {
+        else {
             locals.Result = "UserNotFound";
         }
         console.log(locals);
@@ -101,11 +115,21 @@ router.post('/ForgotPass', function (req, res, next) {
 });
 
 router.post('/LogUserIn', function (req, res, next) {
+    //Password Encryption
+    var crypto = require('crypto')
+      , key = 'salt_from_the_user_document'
+      , cipher = crypto.createCipher('aes-256-cbc', key)
+      , decipher = crypto.createDecipher('aes-256-cbc', key);
+
     var Username = req.param("Username");
     var Password = req.param("Password");
     var locals = {};
 
-    DA.CheckUserLogin(Username, Password, function (LoginResluts, err) {
+    //Encrypting Password
+    cipher.update(Password, 'utf8', 'base64');
+    var encryptedPassword = cipher.final('base64');
+
+    DA.CheckUserLogin(Username, encryptedPassword, function (LoginResluts, err) {
         if (LoginResluts.length > 0) {
             req.session.UserRole = LoginResluts[0].RoleID;
             locals.Result = 'Allow';
@@ -462,15 +486,21 @@ router.get('/Profile', Authenticate, function (req, res, next) {
             });
         },
         function (callback) {
-            DA.GetAllDogs('', '', '', '', '', function (DogResluts, err) {
+            DA.GetAllDogs('', -1, '', '', '', function (DogResluts, err) {
                 locals.Dogs = DogResluts;
+                callback();
+            });
+        },
+        function (callback) {
+            DA.GetBreeds(-1, function (BreedResluts, err) {
+                locals.Breeds = BreedResluts;
                 callback();
             });
         }
     ],
     function (err) {
         console.log(req.session.RoleID);
-        res.render('Admin/Profile', { layout: 'AdminLayout', MenuActive: 'Profile', Services: locals.ServicesResluts, Dogs: locals.Dogs, AppHist: locals.HistResluts, RoleID: req.session.RoleID });
+        res.render('Admin/Profile', { layout: 'AdminLayout', MenuActive: 'Profile', Services: locals.ServicesResluts, Dogs: locals.Dogs, AppHist: locals.HistResluts, Breeds: locals.Breeds, RoleID: req.session.RoleID });
     });
 });
 
@@ -518,10 +548,69 @@ router.get('/DeleteUser', Authenticate, function (req, res, next) {
 });
 
 router.get('/Config', Authenticate, function (req, res, next) {
-    DA.GetServices(function (ServicesResluts, err) {
-        res.render('Admin/Config', { layout: 'AdminLayout', MenuActive: 'Config', Services: ServicesResluts, RoleID: req.session.RoleID });
+
+
+    var locals = {};
+    async.series([
+        function (callback) {
+            DA.GetBreeds(-1, function (BreedResluts, err) {
+                locals.Breeds = BreedResluts;
+                callback();
+            });
+        },
+        function (callback) {
+            DA.GetServices(function (ServicesResluts, err) {
+                locals.Services = ServicesResluts;
+                callback();
+            });
+        }
+    ],
+    function (err) {
+        res.render('Admin/Config', { layout: 'AdminLayout', MenuActive: 'Config', Services: locals.Services, Breeds: locals.Breeds, RoleID: req.session.RoleID });
     });
 });
+
+router.post('/GetBreedByID', Authenticate, function (req, res, next) {
+    var BreedID = req.param("BreedID");
+
+    DA.GetBreeds(BreedID, function (BreedResluts, err) {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(BreedResluts));
+    });
+});
+
+
+router.post('/UpdateDogBreed', Authenticate, function (req, res, next) {
+    var BreedID = req.param("BreedID");
+    var BreedName = req.param("BreedName");
+
+    DA.UpdateDogBreed(BreedID, BreedName, function (BreedResluts, err) {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(BreedResluts));
+    });
+});
+
+router.post('/DeletDogBreed', Authenticate, function (req, res, next) {
+    var BreedID = req.param("BreedID");
+
+    DA.DeleteDogBreed(BreedID, function (BreedResluts, err) {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(BreedResluts));
+    });
+});
+
+
+
+router.post('/AddDogBreed', Authenticate, function (req, res, next) {
+    var DogBreed = req.param("DogBreed");
+
+    DA.AddDogBreed(DogBreed, function (BreedResluts, err) {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(BreedResluts));
+    });
+});
+
+
 
 
 router.post('/DeleteUser', Authenticate, function (req, res, next) {
@@ -551,6 +640,13 @@ router.post('/SearchUser', Authenticate, function (req, res, next) {
 
 
 router.post('/AddUser', Authenticate, function (req, res, next) {
+
+    //Password Encryption
+    var crypto = require('crypto')
+      , key = 'salt_from_the_user_document'
+      , cipher = crypto.createCipher('aes-256-cbc', key)
+      , decipher = crypto.createDecipher('aes-256-cbc', key);
+
     var FirstName = req.param("FirstName");
     var Surname = req.param("Surname");
     var Email = req.param("Email");
@@ -561,7 +657,12 @@ router.post('/AddUser', Authenticate, function (req, res, next) {
     var Role = req.param("Role");
     var locals = {};
 
-    DA.AddUser(FirstName, Surname, Email, TelNo, UserName, Pass, FB, Role, function (AddResluts, err) {
+    //Encrypting Password
+    cipher.update(Pass, 'utf8', 'base64');
+    var encryptedPassword = cipher.final('base64');
+
+
+    DA.AddUser(FirstName, Surname, Email, TelNo, UserName, encryptedPassword, FB, Role, function (AddResluts, err) {
         locals.Result = AddResluts;
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(locals));
@@ -570,6 +671,13 @@ router.post('/AddUser', Authenticate, function (req, res, next) {
 });
 
 router.post('/UpdateUser', Authenticate, function (req, res, next) {
+
+    //Password Encryption
+    var crypto = require('crypto')
+      , key = 'salt_from_the_user_document'
+      , cipher = crypto.createCipher('aes-256-cbc', key)
+      , decipher = crypto.createDecipher('aes-256-cbc', key);
+
     var FirstName = req.param("FirstName");
     var Surname = req.param("Surname");
     var Email = req.param("Email");
@@ -580,7 +688,11 @@ router.post('/UpdateUser', Authenticate, function (req, res, next) {
     var Role = req.param("Role");
     var locals = {};
 
-    DA.UpdateUser(FirstName, Surname, Email, TelNo, UserName, Pass, FB, Role, function (EditResluts, err) {
+    //Encrypting Password
+    cipher.update(Pass, 'utf8', 'base64');
+    var encryptedPassword = cipher.final('base64');
+
+    DA.UpdateUser(FirstName, Surname, Email, TelNo, UserName, encryptedPassword, FB, Role, function (EditResluts, err) {
         locals.Result = EditResluts;
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(locals));
@@ -706,6 +818,9 @@ router.post('/AddService', Authenticate, function (req, res, next) {
 });
 
 
+router.post('/GetDogBreed', Authenticate, function (req, res, next) {
+
+});
 
 
 
