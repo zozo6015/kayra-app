@@ -644,7 +644,7 @@
         var hours = AppStartDate.getHours();
         hours = hours + 3;
 
-        AppStartDate = moment(AppStartDate.setHours(hours)).format('YYYY-MM-DD');;
+        AppStartDate = moment('2016-07-01T01:01:01').format('YYYY-MM-DD hh:mm:ss');;
 
         //console.log(AppStartDate);
         //var year = AppStartDate.getFullYear().toString();
