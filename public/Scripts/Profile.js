@@ -644,26 +644,31 @@
         var hours = AppStartDate.getHours();
         hours = hours + 3;
 
-        AppStartDate = new Date(AppStartDate.setHours(hours));
-        console.log(AppStartDate);
-        var year = AppStartDate.getFullYear().toString();
-        console.log(year);
-        var month = AppStartDate.getMonth();
-        month = month + 1;
-        month = month.toString();
-        var day = AppStartDate.getDate().toString();
+        AppStartDate = moment(AppStartDate.setHours(hours)).format('YYYY-MM-DD hh:mm');;
 
-        var hour = AppStartDate.getHours().toString();
-        var minute = AppStartDate.getMinutes().toString();
-        var second = AppStartDate.getSeconds().toString();
-        var milsec = AppStartDate.getMilliseconds().toString();
+        //console.log(AppStartDate);
+        //var year = AppStartDate.getFullYear().toString();
+        //console.log(year);
+        //var month = AppStartDate.getMonth();
+        //month = month + 1;
+        //month = month.toString();
+        //var day = AppStartDate.getDate().toString();
 
-        //var endtime = year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ":" + second + "." + milsec;
-        var endtime = year.concat('-', month, '-', day, ' ', hour, ':', minute);
-        document.getElementById("endDate").value = endtime;
+        //var hour = AppStartDate.getHours().toString();
+        //var minute = AppStartDate.getMinutes().toString();
+        //var second = AppStartDate.getSeconds().toString();
+        //var milsec = AppStartDate.getMilliseconds().toString();
+
+        ////var endtime = year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ":" + second + "." + milsec;
+        //var endtime = year.concat('-', month, '-', day, ' ', hour, ':', minute);
+        document.getElementById("endDate").value = AppStartDate;
+
+
+
 
         
     });
+
 
     $('.upload-btn').on('click', function () {
         $('#upload-input').click();
