@@ -640,11 +640,11 @@
     });
 
     $(document).on('dp.change', '#ApointmentStartDate', function () {
-        var AppStartDate = new Date(document.getElementById("startDate").value);
-        var hours = AppStartDate.getHours();
-        hours = hours + 3;
+        var AppStartDate = moment(document.getElementById("startDate").value).format('YYYY-MM-DD hh:mm')
+        AppEndDate = moment(AppStartDate).add(3, 'hours');
 
-        AppStartDate = moment('2016-07-01T01:01:01').format('YYYY-MM-DD hh:mm:ss');;
+
+        AppEndDate = moment(AppEndDate).format('YYYY-MM-DD hh:mm');
 
         //console.log(AppStartDate);
         //var year = AppStartDate.getFullYear().toString();
@@ -661,7 +661,7 @@
 
         ////var endtime = year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ":" + second + "." + milsec;
         //var endtime = year.concat('-', month, '-', day, ' ', hour, ':', minute);
-        document.getElementById("endDate").value = AppStartDate;
+        document.getElementById("endDate").value = AppEndDate;
 
 
 
