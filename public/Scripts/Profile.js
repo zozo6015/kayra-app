@@ -645,18 +645,21 @@
         hours = hours + 3;
 
         AppStartDate = new Date(AppStartDate.setHours(hours));
-
-        var year = AppStartDate.getYear();
+        console.log(AppStartDate);
+        var year = AppStartDate.getFullYear().toString();
+        console.log(year);
         var month = AppStartDate.getMonth();
-        var day = AppStartDate.getDate();
+        month = month + 1;
+        month = month.toString();
+        var day = AppStartDate.getDate().toString();
 
-        var hour = AppStartDate.getHours();
-        var minute = AppStartDate.getMinutes();
-        var second = AppStartDate.getSeconds();
-        var milsec = AppStartDate.getMilliseconds();
+        var hour = AppStartDate.getHours().toString();
+        var minute = AppStartDate.getMinutes().toString();
+        var second = AppStartDate.getSeconds().toString();
+        var milsec = AppStartDate.getMilliseconds().toString();
 
-        var endtime = year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ":" + second + "." + milsec;
-
+        //var endtime = year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ":" + second + "." + milsec;
+        var endtime = year.concat('-', month, '-', day, ' ', hour, ':', minute);
         document.getElementById("endDate").value = endtime;
 
         
