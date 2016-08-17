@@ -183,6 +183,9 @@
         txtUpdateFB.disabled = true;
         txtUpdateNotes.disabled = true;
         btnUpdateDogProfile.disabled = true;
+        txtUpdateOwnerAddress.disabled = true;
+        ddUpdateVet.disabled = true;
+        ddUpdateDiscount.disabled = true;
 
 
         var DogID = this.id;
@@ -205,6 +208,9 @@
         txtUpdateFB.disabled = false;
         txtUpdateNotes.disabled = false;
         btnUpdateDogProfile.disabled = false;
+        txtUpdateOwnerAddress.disabled = false;
+        ddUpdateVet.disabled = false;
+        ddUpdateDiscount.disabled = false;
 
         var DogID = this.id;
         DogIDArr = DogID.split('-');
