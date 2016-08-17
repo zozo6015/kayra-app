@@ -338,6 +338,8 @@
         var Notes = $('#txtUpdateNotes').val();
         var OwnerAddress = $('#txtUpdateOwnerAddress').val();
 
+        console.log(Vet);
+
 
         if (DogBreed == '') {
             $("#divAlertBoxUpdate").css("display", "block");

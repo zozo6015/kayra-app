@@ -793,6 +793,10 @@ router.post('/UpdateDogProfile', Authenticate, function (req, res, next) {
     var Notes = req.param("Notes");
     var OwnerAddress = req.param("OwnerAddress");
 
+    console.log('Vet: ', Vet);
+    console.log('Discount: ', Discount);
+    console.log('OwnerAddress: ', OwnerAddress);
+
     var locals = {};
 
     DA.UpdateDogProfile(DogID, DogBreed, DogName, OwnerFirstName, OwnerSurname, TelNo, Email, Vet, Discount, Facebook, Notes, OwnerAddress, function (DogUpdateResluts, err) {
