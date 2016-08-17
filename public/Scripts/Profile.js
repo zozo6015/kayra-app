@@ -252,22 +252,22 @@
             GetDogImages(Result.DogID, function (DogmgArr) {
                 var html = "";
                 var htmlsmallthumbs = "";
-                //for (i = 0; i < DogmgArr.length; i++) {
-                //    var imageid1 = 'imagebig' + i;
-                //    htmlsmallthumbs += "<div class='col-12 col-md-4 col-sm-6'>";
-                //    htmlsmallthumbs += "<a title='Dogs' class='imgTitle' href='#'>";
-                //    htmlsmallthumbs += "<img class='thumbnail img-responsive' id='" + imageid1 + "' src='" + DogmgArr[i] + "'>";
-                //    htmlsmallthumbs += "</a>";
-                //    htmlsmallthumbs += "</div>";
+                for (i = 0; i < DogmgArr.length; i++) {
+                    var imageid1 = 'imagebig' + i;
+                    htmlsmallthumbs += "<div class='col-12 col-md-4 col-sm-6'>";
+                    htmlsmallthumbs += "<a title='Dogs' class='imgTitle' href='#'>";
+                    htmlsmallthumbs += "<img class='thumbnail img-responsive' id='" + imageid1 + "' src='" + DogmgArr[i] + "'>";
+                    htmlsmallthumbs += "</a>";
+                    htmlsmallthumbs += "</div>";
 
-                //    for (i1 = 0; i1 < DogmgArr.length; i1++) {
+                    for (i1 = 0; i1 < DogmgArr.length; i1++) {
 
-                //        html += '<div class="item" id="' + imageid1 + '">';
-                //        html += '<img class="thumbnail img-responsive" title="Dogs" src="' + DogmgArr[i1] + '">';
-                //        html += '</div>';
-                //    }
+                        html += '<div class="item" id="' + imageid1 + '">';
+                        html += '<img class="thumbnail img-responsive" title="Dogs" src="' + DogmgArr[i1] + '">';
+                        html += '</div>';
+                    }
 
-                //}
+                }
 
                 $(".updateModal").append(html);
                 $(".addModal").append(html);
