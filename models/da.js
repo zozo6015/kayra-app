@@ -19,8 +19,8 @@ var mysql = require('mysql');
 
 var pool = mysql.createPool({
     connectionLimit : 100, //important
-    //host     : 'localhost',
-    host     : '10.160.125.69',
+    host     : 'localhost',
+    //host     : '10.160.125.69',
     user: 'kayra',
     password : 'kayra123$',
     database : 'salonkayra',
@@ -74,14 +74,7 @@ function GetServices(callback) {
 
 function AddUser(FirstName, Surname, Email, TelNo, UserName, Pass, FB, Role, callback)
 {
-    console.log(FirstName);
-    console.log(Surname);
-    console.log(Email);
-    console.log(TelNo);
-    console.log(UserName);
-    console.log(Pass);
-    console.log(FB);
-    console.log(Role);
+
     pool.getConnection(function (err, connection) {
         connection.query('CALL SP_AddUser(' + mysql.escape(FirstName) + ', ' + mysql.escape(Surname) + ', ' + mysql.escape(Email) + ', ' + mysql.escape(TelNo) + ', ' + mysql.escape(UserName) + ', ' + mysql.escape(Pass) + ', ' + mysql.escape(FB) + ', ' + mysql.escape(Role) + ')', function (err, rows) {
             if (err) throw err;
@@ -209,7 +202,6 @@ function GetAllDogAppointments(callback)
 
 function UpdateAppointment(AppointmentID, StartDate, EndDate, AppNotes, Price, PriceNote, callback)
 {
-    console.log("heelo");
     pool.getConnection(function (err, connection) {
         connection.query('CALL SP_UpdateAppointment(' + mysql.escape(AppointmentID) + ', ' + mysql.escape(StartDate) + ', ' + mysql.escape(EndDate) + ', ' + mysql.escape(AppNotes) + ', ' + mysql.escape(Price) + ', ' + mysql.escape(PriceNote) + ')', function (err, rows) {
             if (err) throw err;
@@ -238,7 +230,7 @@ function GetAllDogs(DogName, Bread, FirstName, Surname, Email, VetID, callback)
 
 function UpdateDogProfile(DogID, DogBreed, DogName, OwnerFirstName, OwnerSurname, TelNo, Email, Vet, Discount, Facebook, Notes, OwnerAddress, callback) {
     pool.getConnection(function (err, connection) {
-        console.log('CALL SP_UpdateDogProfile(' + mysql.escape(DogID) + ', ' + mysql.escape(DogBreed) + ', ' + mysql.escape(DogName) + ', ' + mysql.escape(OwnerFirstName) + ', ' + mysql.escape(OwnerSurname) + ', ' + mysql.escape(TelNo) + ', ' + mysql.escape(Email) + ', ' + mysql.escape(Vet) + ', ' + mysql.escape(Discount) + ', ' + mysql.escape(Facebook) + ', ' + mysql.escape(Notes) + ', ' + mysql.escape(OwnerAddress) + ')');
+        
         connection.query('CALL SP_UpdateDogProfile(' + mysql.escape(DogID) + ', ' + mysql.escape(DogBreed) + ', ' + mysql.escape(DogName) + ', ' + mysql.escape(OwnerFirstName) + ', ' + mysql.escape(OwnerSurname) + ', ' + mysql.escape(TelNo) + ', ' + mysql.escape(Email) + ', ' + mysql.escape(Vet) + ', ' + mysql.escape(Discount) + ', ' + mysql.escape(Facebook) + ', ' + mysql.escape(Notes) + ', ' + mysql.escape(OwnerAddress) + ')', function (err, rows) {
             if (err) throw err;
             else {
