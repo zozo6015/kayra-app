@@ -371,6 +371,7 @@ router.post('/GetDogImages', Authenticate, function (req, res, next) {
     var FileArr = [];
     var FileArr1 = [];
 
+    console.log("DirPath: ", dirpath);
 
     async.series([
         function (callback) {
