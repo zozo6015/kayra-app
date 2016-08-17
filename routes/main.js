@@ -272,6 +272,8 @@ router.post('/ViewAppointmentDetails', Authenticate, function (req, res, next) {
                 var TelNo = AppointmentsResluts[i].TelNo;
                 var Email = AppointmentsResluts[i].Email;
                 var Facebook = AppointmentsResluts[i].Facebook;
+                var Price = AppointmentsResluts[i].Price;
+                var PriceNotes = AppointmentsResluts[i].PriceNotes;
                 var AppNotes = AppointmentsResluts[i].AppNotes;
 
                 var JSStartDate = AppointmentsResluts[i].StartTime;
@@ -302,7 +304,7 @@ router.post('/ViewAppointmentDetails', Authenticate, function (req, res, next) {
 
                 var Period = AppointmentsResluts[i].Period;
 
-                var Appointments = { AppointmentID: AppointmentID, DogID: DogID, DogBreed: DogBreed, DogName: DogName, OwnerFirstName: OwnerFirstName, TelNo: TelNo, Email: Email, Facebook: Facebook, StartTime: StartTime, EndDate: EndDate, Period: Period, AppNotes: AppNotes, ServiceIDsArr: ServiceIDsArr }
+                var Appointments = { AppointmentID: AppointmentID, DogID: DogID, DogBreed: DogBreed, DogName: DogName, OwnerFirstName: OwnerFirstName, TelNo: TelNo, Email: Email, Facebook: Facebook, StartTime: StartTime, EndDate: EndDate, Period: Period, Price: Price, PriceNotes: PriceNotes, AppNotes: AppNotes, ServiceIDsArr: ServiceIDsArr }
                 AppointmentsArr.push(Appointments);
 
             }
@@ -429,13 +431,15 @@ router.post('/UpdateAppointment', Authenticate, function (req, res, next) {
     var AppointmentID = req.param("AppointmentID");
     var StartDate = req.param("StartDate");
     var EndDate = req.param("EndDate");
+    var Price = req.param("Price");
+    var Pricenotes = req.param("Pricenotes");
     var AppNotes = req.param("AppNote");
     var locals = {};
 
 
 
 
-    DA.UpdateAppointment(AppointmentID, StartDate, EndDate, AppNotes, function (AppointmentsUpdateResluts, err) {
+    DA.UpdateAppointment(AppointmentID, StartDate, EndDate, AppNotes, Price, Pricenotes, function (AppointmentsUpdateResluts, err) {
         locals.AppointmentsUpdateResluts = AppointmentsUpdateResluts;
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(locals));
@@ -451,6 +455,7 @@ router.get('/SearchDog', Authenticate, function (req, res, next) {
     var FirstName = req.query.FirstName;
     var Surname = req.query.Surname;
     var Email = req.query.Email;
+    var Vet = req.query.Vet;
     var locals = {};
 
 
@@ -462,14 +467,26 @@ router.get('/SearchDog', Authenticate, function (req, res, next) {
             });
         },
         function (callback) {
-            DA.GetAllDogs(DogName, Bread, FirstName, Surname, Email, function (DogResluts, err) {
+            DA.GetAllDogs(DogName, Bread, FirstName, Surname, Email, Vet, function (DogResluts, err) {
                 locals.Dogs = DogResluts;
+                callback();
+            });
+        },
+        function (callback) {
+            DA.GetBreeds(-1, function (BreedResluts, err) {
+                locals.Breeds = BreedResluts;
+                callback();
+            });
+        },
+        function (callback) {
+            DA.GetVetByID(-1, function (Resluts, err) {
+                locals.Vets = Resluts;
                 callback();
             });
         }
     ],
     function (err) {
-        res.render('Admin/Profile', { layout: 'AdminLayout', MenuActive: 'Profile', Services: locals.ServicesResluts, Dogs: locals.Dogs, AppHist: locals.HistResluts, RoleID: req.session.RoleID });
+        res.render('Admin/Profile', { layout: 'AdminLayout', MenuActive: 'Profile', Services: locals.ServicesResluts, Dogs: locals.Dogs, AppHist: locals.HistResluts, Breeds: locals.Breeds, Vets: locals.Vets, RoleID: req.session.RoleID });
     });
 
 
@@ -486,7 +503,7 @@ router.get('/Profile', Authenticate, function (req, res, next) {
             });
         },
         function (callback) {
-            DA.GetAllDogs('', -1, '', '', '', function (DogResluts, err) {
+            DA.GetAllDogs('', -1, '', '', '', -1, function (DogResluts, err) {
                 locals.Dogs = DogResluts;
                 callback();
             });
@@ -496,11 +513,25 @@ router.get('/Profile', Authenticate, function (req, res, next) {
                 locals.Breeds = BreedResluts;
                 callback();
             });
+        },
+        function (callback) {
+            DA.GetVetByID(-1, function (Resluts, err) {
+                locals.Vets = Resluts;
+                callback();
+            });
+        },
+        function (callback) {
+            DA.GetDiscount(-1, function (Resluts, err) {
+                locals.Discounts = Resluts;
+                callback();
+            });
         }
+
+
     ],
     function (err) {
         console.log(req.session.RoleID);
-        res.render('Admin/Profile', { layout: 'AdminLayout', MenuActive: 'Profile', Services: locals.ServicesResluts, Dogs: locals.Dogs, AppHist: locals.HistResluts, Breeds: locals.Breeds, RoleID: req.session.RoleID });
+        res.render('Admin/Profile', { layout: 'AdminLayout', MenuActive: 'Profile', Services: locals.ServicesResluts, Dogs: locals.Dogs, AppHist: locals.HistResluts, Breeds: locals.Breeds, Vets: locals.Vets, Disccounts: locals.Discounts, RoleID: req.session.RoleID });
     });
 });
 
@@ -514,6 +545,8 @@ router.post('/GetDogHistory', Authenticate, function (req, res, next) {
             var DogID = HistResluts[i].DogID;
             var DogName = HistResluts[i].DogName;
             var OwnerName = HistResluts[i].OwnerFirstName + ' ' + HistResluts[i].OwnerSurname;
+            var Price = HistResluts[i].Price;
+            var PriceNote = HistResluts[i].PriceNotes;
 
             var JSStartDate = HistResluts[i].StartTime;
             var StartSec = JSStartDate.getSeconds();
@@ -527,7 +560,7 @@ router.post('/GetDogHistory', Authenticate, function (req, res, next) {
             var StartTime = StartYear + '-' + ('0' + StartMonth).slice(-2) + '-' + ('0' + StartDay).slice(-2) + ' ' + ('0' + StartHour).slice(-2) + ':' + ('0' + StartMin).slice(-2) + ':' + ('0' + StartSec).slice(-2);
             var Services = HistResluts[i].Services;
 
-            var Hist = { DogName: DogName, OwnerName: OwnerName, StartTime: StartTime, Services: Services }
+            var Hist = { DogName: DogName, OwnerName: OwnerName, StartTime: StartTime, Services: Services, Price: Price, PriceNote: PriceNote }
             AppHistArr.push(Hist);
         }
 
@@ -563,10 +596,22 @@ router.get('/Config', Authenticate, function (req, res, next) {
                 locals.Services = ServicesResluts;
                 callback();
             });
+        },
+        function (callback) {
+            DA.GetVets(-1, function (VetResluts, err) {
+                locals.Vets = VetResluts;
+                callback();
+            });
+        },
+        function (callback) {
+            DA.GetDiscount(-1, function (DiscResluts, err) {
+                locals.Discounts = DiscResluts;
+                callback();
+            });
         }
     ],
     function (err) {
-        res.render('Admin/Config', { layout: 'AdminLayout', MenuActive: 'Config', Services: locals.Services, Breeds: locals.Breeds, RoleID: req.session.RoleID });
+        res.render('Admin/Config', { layout: 'AdminLayout', MenuActive: 'Config', Services: locals.Services, Breeds: locals.Breeds, Vets: locals.Vets, Discounts: locals.Discounts, RoleID: req.session.RoleID });
     });
 });
 
@@ -706,12 +751,14 @@ router.post('/AddDogProfile', Authenticate, function (req, res, next) {
     var FirstName = req.param("FirstName");
     var Surname = req.param("Surname");
     var Email = req.param("Email");
+    var VetID = req.param("Vet");
+    var DiscountID = req.param("Discount");
     var TelNo = req.param("TelNo");
     var FB = req.param("FB");
     var Notes = req.param("Notes");
     var locals = {};
 
-    DA.AddDogProfile(DogBreed, DogName, FirstName, Surname, Email, TelNo, FB, Notes, function (DogProfileAddResluts, err) {
+    DA.AddDogProfile(DogBreed, DogName, FirstName, Surname, Email, VetID, DiscountID, TelNo, FB, Notes, function (DogProfileAddResluts, err) {
         locals.Result = DogProfileAddResluts;
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(locals));
@@ -739,12 +786,14 @@ router.post('/UpdateDogProfile', Authenticate, function (req, res, next) {
     var OwnerSurname = req.param("OwnerSurname");
     var TelNo = req.param("TelNo");
     var Email = req.param("Email");
+    var Vet = req.param("Vet");
+    var Discount = req.param("Discount");
     var Facebook = req.param("Facebook");
     var Notes = req.param("Notes");
 
     var locals = {};
 
-    DA.UpdateDogProfile(DogID, DogBreed, DogName, OwnerFirstName, OwnerSurname, TelNo, Email, Facebook, Notes, function (DogUpdateResluts, err) {
+    DA.UpdateDogProfile(DogID, DogBreed, DogName, OwnerFirstName, OwnerSurname, TelNo, Email, Vet, Discount, Facebook, Notes, function (DogUpdateResluts, err) {
         locals.Result = DogUpdateResluts;
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(locals));
@@ -756,10 +805,12 @@ router.post('/AddAppointment', Authenticate, function (req, res, next) {
     var DogID = req.param("DogID");
     var StartDate = req.param("StartDate");
     var EndDate = req.param("EndDate");
+    var Price = req.param("Price");
+    var Pricenotes = req.param("Pricenotes");
     var AppointmentNotes = req.param("AppointmentNotes");
     var locals = {};
 
-    DA.AddDogApointment(DogID, StartDate, EndDate, AppointmentNotes, function (AppointmentResluts, err) {
+    DA.AddDogApointment(DogID, StartDate, EndDate, AppointmentNotes, Price, Pricenotes, function (AppointmentResluts, err) {
         locals.Result = AppointmentResluts;
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(locals));
@@ -821,6 +872,76 @@ router.post('/AddService', Authenticate, function (req, res, next) {
 router.post('/GetDogBreed', Authenticate, function (req, res, next) {
 
 });
+
+router.post('/AddVet', Authenticate, function (req, res, next) {
+    var Firstname = req.param("Firstname");
+    var Surname = req.param("Surname");
+
+    DA.AddVet(Firstname, Surname, function (Resluts, err) {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(Resluts));
+    });
+});
+
+router.post('/UpdateVet', Authenticate, function (req, res, next) {
+    var VetID = req.param("VetID");
+    var Firstname = req.param("Firstname");
+    var Surname = req.param("Surname");
+
+    DA.UpdateVet(VetID, Firstname, Surname, function (Resluts, err) {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(Resluts));
+    });
+});
+
+
+router.post('/GetVetByID', Authenticate, function (req, res, next) {
+    var VetID = req.param("VetID");
+
+    DA.GetVetByID(VetID, function (Resluts, err) {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(Resluts));
+    });
+});
+
+
+router.post('/AddDiscount', Authenticate, function (req, res, next) {
+    var DiscDesc = req.param("DiscDesc");
+    var DiscAmountPerc = req.param("DiscAmountPerc");
+    var color = req.param("color");
+
+    DA.AddDiscount(DiscDesc, DiscAmountPerc, color, function (Resluts, err) {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(Resluts));
+    });
+});
+
+router.post('/GetDiscount', Authenticate, function (req, res, next) {
+    var DiscountID = req.param("DiscountID");
+
+    DA.GetDiscount(DiscountID, function (Resluts, err) {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(Resluts));
+    });
+});
+
+router.post('/UpdateDiscount', Authenticate, function (req, res, next) {
+    var DiscID = req.param("DiscID");
+    var DiscDesc = req.param("DiscDesc");
+    var DiscAmtPerc = req.param("DiscAmtPerc");
+    var color = req.param("color");
+
+    DA.UpdateDiscount(DiscID, DiscDesc, DiscAmtPerc, color, function (Resluts, err) {
+        console.log(Resluts);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(Resluts));
+    });
+});
+
+
+
+
+
 
 
 

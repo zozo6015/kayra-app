@@ -20,6 +20,8 @@
         var Surname = $("#txtSurname").val();
         var TelNo = $("#txtTelNo").val();
         var Email = $("#txtEmail").val();
+        var Vet = $("#ddVet option:selected").val();
+        var Discount = $("#ddDiscount option:selected").val();
         var FB = $("#txtFB").val();
         var Notes = $("#txtNotes").val();
 
@@ -55,7 +57,7 @@
 
 
 
-            var parameters = { DogBreed: DogBreed, DogName: DogName, FirstName: FirstName, Surname: Surname, TelNo: TelNo, Email: Email, FB: FB, Notes: Notes };
+            var parameters = { DogBreed: DogBreed, DogName: DogName, FirstName: FirstName, Surname: Surname, TelNo: TelNo, Email: Email, FB: FB, Notes: Notes, Vet: Vet, Discount: Discount };
 
             $.post('/AddDogProfile', parameters)
                 .done(function (data) {
@@ -127,7 +129,22 @@
                         $('#btnAddDogProfileAppointment').prop('disabled', false);
 
                     }
-                    else {
+                    else if (data.Result[0].Result == -2) {
+
+                        $("#divAlertBox").css("display", "block");
+                        $("#divAlertMsgText").html("Firstname and telephone number already exists");
+                        $("#divAlertBox").removeClass("alert alert-success");
+                        $("#divAlertBox").addClass("alert alert-danger");
+                    }
+                    else if (data.Result[0].Result == -3) {
+
+                        $("#divAlertBox").css("display", "block");
+                        $("#divAlertMsgText").html("Surname, dog name and telephone number already exists");
+                        $("#divAlertBox").removeClass("alert alert-success");
+                        $("#divAlertBox").addClass("alert alert-danger");
+                    }
+                    else if (data.Result[0].Result == -1) {
+
                         $("#divAlertBox").css("display", "block");
                         $("#divAlertMsgText").html("Failed! Please try again or contact the site administrator");
                         $("#divAlertBox").removeClass("alert alert-success");
@@ -210,15 +227,16 @@
             var Result = data.Result[0];
 
             $('select[name=ddUpdateDogBreed]').val(Result.BreedID);
-            $('.selectpicker').selectpicker('refresh');
             $('#txtUpdateDogName').val(Result.DogName);
             $('#txtUpdateFirstname').val(Result.OwnerFirstName);
             $('#txtUpdateSurname').val(Result.OwnerSurname);
             $('#txtUpdateTelNo').val(Result.TelNo);
             $('#txtUpdateEmail').val(Result.Email);
             $('#txtUpdateFB').val(Result.Facebook);
+            $('select[name=ddUpdateVet]').val(Result.VetID);
+            $('select[name=ddUpdateDiscount]').val(Result.DiscID);
             $('#txtUpdateNotes').val(Result.Notes);
-
+            $('.selectpicker').selectpicker('refresh');
 
             $('#hidUpdateDogID').val(Result.DogID);
 
@@ -290,10 +308,11 @@
         var FirstName = $('#txtSearchOwnerFirst').val();
         var Surname = $('#txtSearchOwnerSurname').val();
         var Email = $('#txtSearchEmail').val();
+        var Vet = $("#ddVetSearch option:selected").val();
 
         //window.location.assign("SearchDog");
 
-        window.location.assign("/SearchDog?DogName=" + DogName + "&Bread=" + Bread + "&FirstName=" + FirstName + "&Surname=" + Surname + "&Email=" + Email);
+        window.location.assign("/SearchDog?DogName=" + DogName + "&Bread=" + Bread + "&FirstName=" + FirstName + "&Surname=" + Surname + "&Email=" + Email + "&Vet=" + Vet);
 
     });
 
@@ -305,6 +324,8 @@
         var OwnerSurname = $('#txtUpdateSurname').val();
         var TelNo = $('#txtUpdateTelNo').val();
         var Email = $('#txtUpdateEmail').val();
+        var Vet = $("#ddUpdateVet option:selected").val();
+        var Discount = $("#ddUpdateDiscount option:selected").val();
         var Facebook = $('#txtUpdateFB').val();
         var Notes = $('#txtUpdateNotes').val();
 
@@ -335,7 +356,7 @@
         }
         else {
 
-            var parameters = { DogID: DogID, DogBreed: DogBreed, DogName: DogName, OwnerFirstName: OwnerFirstName, OwnerSurname: OwnerSurname, TelNo: TelNo, Email: Email, Facebook: Facebook, Notes: Notes };
+            var parameters = { DogID: DogID, DogBreed: DogBreed, DogName: DogName, OwnerFirstName: OwnerFirstName, OwnerSurname: OwnerSurname, TelNo: TelNo, Email: Email, Facebook: Facebook, Notes: Notes, Vet: Vet, Discount: Discount };
 
             $.post('/UpdateDogProfile', parameters)
             .done(function (data) {
@@ -460,20 +481,28 @@
                     }
 
 
-                    html += "<div class='col-xs-12 col-sm-3 col-md-3 col-lg-3'>";
+                    html += "<div class='col-xs-12 col-sm-1 col-md-1 col-lg-1'>";
                     html += Result[i].DogName;
                     html += "</div>";
 
-                    html += "<div class='col-xs-12 col-sm-3 col-md-3 col-lg-3'>";
+                    html += "<div class='col-xs-12 col-sm-2 col-md-2 col-lg-2'>";
                     html += Result[i].OwnerName;
                     html += "</div>";
 
-                    html += "<div class='col-xs-12 col-sm-3 col-md-3 col-lg-3'>";
+                    html += "<div class='col-xs-12 col-sm-2 col-md-2 col-lg-2'>";
                     html += Result[i].StartTime;
                     html += "</div>";
 
-                    html += "<div class='col-xs-12 col-sm-3 col-md-3 col-lg-3'>";
+                    html += "<div class='col-xs-12 col-sm-2 col-md-2 col-lg-2'>";
                     html += Result[i].Services;
+                    html += "</div>";
+
+                    html += "<div class='col-xs-1 col-sm-1 col-md-1 col-lg-1'>";
+                    html += Result[i].Price;
+                    html += "</div>";
+
+                    html += "<div class='col-xs-12 col-sm-4 col-md-4 col-lg-4'>";
+                    html += Result[i].PriceNote;
                     html += "</div>";
 
 
@@ -512,6 +541,8 @@
         var DogID = $('#hidDogID').val();
         var StartDate = $('#startDate').val();
         var EndDate = $('#endDate').val();
+        var Price = $('#txtPrice').val();
+        var txtPricenotes = $('#txtPricenotes').val();
         var AppointmentNotes = $('#txtnotes').val();
         var AppointmentID = 0;
 
@@ -529,7 +560,7 @@
         }
         else {
 
-            var parameters = { DogID: DogID, StartDate: StartDate, EndDate: EndDate, AppointmentNotes: AppointmentNotes };
+            var parameters = { DogID: DogID, StartDate: StartDate, EndDate: EndDate, AppointmentNotes: AppointmentNotes, Price: Price, Pricenotes: txtPricenotes };
 
             $.post('/AddAppointment', parameters)
             .done(function (data) {
@@ -755,7 +786,7 @@
     });
 
     $('#startDate').change(function () {
-        alert("hello");
+
     });
 
 

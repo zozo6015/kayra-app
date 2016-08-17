@@ -507,8 +507,7 @@
 
         $.post('/UpdateDogBreed', parameters)
             .done(function (data) {
-                if (data[0].Result == 'Success')
-                {
+                if (data[0].Result == 'Success') {
                     $("#divAlertBoxUpdateBreed").css("display", "block");
                     $("#divAlertMsgTextUpdateBreed").html("Dog breed updated successfully");
                     $("#divAlertBoxUpdateBreed").removeClass("alert alert-danger");
@@ -520,8 +519,7 @@
                         });
                     }, 2000);
                 }
-                else
-                {
+                else {
                     $("#divAlertBoxUpdateBreed").css("display", "block");
                     $("#divAlertMsgTextUpdateBreed").html("An error occurred. Please contact the site administrator");
                     $("#divAlertBoxUpdateBreed").addClass("alert alert-danger");
@@ -533,7 +531,7 @@
             })
             .always(function () {
 
-        });
+            });
 
     });
 
@@ -568,7 +566,7 @@
                 })
                 .always(function () {
 
-           });
+                });
 
         }
     });
@@ -614,11 +612,11 @@
             })
             .always(function () {
 
-        });
+            });
     });
-    
 
-    
+
+
 
     $("#btnForgotPassword").on("click", function () {
         var Email = $("#txtEmail").val();
@@ -630,7 +628,6 @@
 
             $.post('/ForgotPass', parameters)
                 .done(function (data) {
-                    alert(data.Result);
                     if (data.Result == 'Success') {
                         $("#divAlertBox").css("display", "block");
                         $("#divAlertMsgText").html("You password has been sent. Please check your email!");
@@ -670,6 +667,346 @@
         }
     });
 
+    $("#btnAddVetModal").on("click", function (e) {
+        e.preventDefault();
+        var Firstname = $("#txtVetFirstName").val();
+        var Surname = $("#txtVetSurname").val();
+
+        var parameters = { Firstname: Firstname, Surname: Surname };
+        if (Firstname != '') {
+
+
+            $.post('/AddVet', parameters)
+                .done(function (data) {
+                    if (data[0].VetID != '-1') {
+                        $("#divAlertBoxAddVet").css("display", "block");
+                        $("#divAlertMsgTextAddVet").html("Vet added successfully!");
+                        $("#divAlertBoxAddVet").removeClass("alert alert-danger");
+                        $("#divAlertBoxAddVet").addClass("alert alert-success");
+                        
+                        setTimeout(function () {
+                            $("#divAlertBoxAddVet").fadeOut("slow", function () {
+                                window.location.assign("/Config");
+                            });
+                        }, 3000);
+                    }
+                    else {
+                        $("#divAlertBoxAddVet").css("display", "block");
+                        $("#divAlertMsgTextAddVet").html("Vet already exist!");
+                        $("#divAlertBoxAddVet").addClass("alert alert-danger");
+                        $("#divAlertBoxAddVet").removeClass("alert alert-success");
+                    }
+                })
+                .fail(function () {
+
+                })
+                .always(function () {
+
+                });
+        }
+    });
+
+
+    
+    $("#btnUpdateVetModal").on("click", function (e) {
+        e.preventDefault();
+        var VetID = $("#hidVetID").val();
+        var Firstname = $("#txtVetUpdateFirstName").val();
+        var Surname = $("#txtVetUpdateSurname").val();
+
+        var parameters = { VetID: VetID, Firstname: Firstname, Surname: Surname };
+        if (Firstname != '') {
+
+
+            $.post('/UpdateVet', parameters)
+                .done(function (data) {
+                    if (data[0].Result == 'Success') {
+                        $("#divAlertBoxUpdateVet").css("display", "block");
+                        $("#divAlertMsgTextUpdateVet").html("Vet update successfully!");
+                        $("#divAlertBoxUpdateVet").removeClass("alert alert-danger");
+                        $("#divAlertBoxUpdateVet").addClass("alert alert-success");
+
+                        setTimeout(function () {
+                            $("#divAlertBoxUpdateVet").fadeOut("slow", function () {
+                                window.location.assign("/Config");
+                            });
+                        }, 2000);
+                    }
+                    else {
+                        $("#divAlertBoxUpdateVet").css("display", "block");
+                        $("#divAlertMsgTextUpdateVet").html("Unable to Update! Please contact support");
+                        $("#divAlertBoxUpdateVet").addClass("alert alert-danger");
+                        $("#divAlertBoxUpdateVet").removeClass("alert alert-success");
+                    }
+                })
+                .fail(function () {
+
+                })
+                .always(function () {
+
+                });
+        }
+    });
+
+    
+
+
+    $("#btnAddVet").on("click", function () {
+        $('#AddVetModal').modal('toggle');
+
+        var options = {
+            "backdrop": "static"
+        }
+
+        $('#AddVetModal').modal(options);
+    });
+
+    $(".UpdateVet").on("click", function () {
+        var VetID = this.id;
+        VetIDArr = VetID.split('-');
+        VetID = VetIDArr[1];
+
+        var parameters = { VetID: VetID };
+        $.post('/GetVetByID', parameters)
+            .done(function (data) {
+                data[0].VetFirstname;
+                $('#txtVetUpdateFirstName').val(data[0].VetFirstname);
+                $('#txtVetUpdateSurname').val(data[0].VetSurname);
+                $('#hidVetID').val(data[0].ID);
+
+                //var Result = data.Resluts[0];
+                //alert(Result.VetFirstname)
+                $('#UpdateVetModal').modal('toggle');
+                var options = {
+                    "backdrop": "static"
+                }
+
+                $('#UpdateVetModal').modal(options);
+
+            })
+            .fail(function () {
+
+            })
+            .always(function () {
+
+            });
+
+        
+
+        
+    });
+
+    $("#btnAddDiscount").on("click", function () {
+        $('#AddDiscountModal').modal('toggle');
+
+        var options = {
+            "backdrop": "static"
+        }
+
+        $('#AddDiscountModal').modal(options);
+    });
+
+
+    var color = '';
+    $("#btnAddDiscModal").on("click", function (e) {
+        e.preventDefault();
+        color = '';
+        var DiscDesc = $("#txtDiscName").val();
+        var DiscAmountPerc = $("#txtAmountPerc").val();
+        var parameters = { DiscountDesc: DiscDesc };
+
+        
+        var x = $("#btncolorPicker").css('backgroundColor');
+        hexc(x);
+
+        var parameters = { DiscDesc: DiscDesc, DiscAmountPerc: DiscAmountPerc, color: color };
+        
+        $.post('/AddDiscount', parameters)
+            .done(function (data) {
+
+                if (data[0].Result > 0)
+                {
+                    $("#divAlertBoxAddDisc").css("display", "block");
+                    $("#divAlertMsgTextAddSic").html("Discount added successfully!");
+                    $("#divAlertBoxAddDisc").removeClass("alert alert-danger");
+                    $("#divAlertBoxAddDisc").addClass("alert alert-success");
+
+                    setTimeout(function () {
+                        $("#divAlertBoxAddDisc").fadeOut("slow", function () {
+                            window.location.assign("/Config");
+                        });
+                    }, 2000);
+                }
+                else
+                {
+                    $("#divAlertBoxAddDisc").css("display", "block");
+                    $("#divAlertMsgTextAddSic").html("Unable to add discount! Please contact the systems administrator.");
+                    $("#divAlertBoxAddDisc").addClass("alert alert-danger");
+                    $("#divAlertBoxAddDisc").removeClass("alert alert-success");
+                }
+
+            })
+            .fail(function () {
+
+            })
+            .always(function () {
+
+            });
+
+    });
+
+    $(".UpdateDisc").on("click", function (e) {
+        e.preventDefault();
+
+        var DiscountID = this.id;
+        DiscountIDArr = DiscountID.split('-');
+        DiscountID = DiscountIDArr[1];
+
+        var parameters = { DiscountID: DiscountID };
+
+        $.post('/GetDiscount', parameters)
+            .done(function (data) {
+
+                
+                $("#hidDiscID").val(data[0].ID);
+                $("#txtUpdateDiscName").val(data[0].DiscountDesc);
+                $("#txtUpdateAmountPerc").val(data[0].DiscountAmtPerc);
+                
+                $("#btnUpdatecolorPicker").css("background-color", data[0].Color);
+            })
+            .fail(function () {
+
+            })
+            .always(function () {
+
+            });
+
+        $('#UpdateDiscountModal').modal('toggle');
+
+        var options = {
+            "backdrop": "static"
+        }
+
+        $('#UpdateDiscountModal').modal(options);
+        
+    });
+
+    $("#btnUpdateDiscModal").on("click", function (e) {
+        e.preventDefault();
+        color = '';
+
+        var DiscID = $("#hidDiscID").val();
+        var DiscDesc = $("#txtUpdateDiscName").val();
+        var DiscAmtPerc = $("#txtUpdateAmountPerc").val();
+        var x = $("#btnUpdatecolorPicker").css('backgroundColor');
+        hexc(x);
+
+        var parameters = { DiscID: DiscID, DiscDesc: DiscDesc, DiscAmtPerc: DiscAmtPerc, color: color };
+
+        $.post('/UpdateDiscount', parameters)
+            .done(function (data) {
+                if (data[0].Result == 'Success')
+                {
+                    $("#divAlertBoxUpdateDisc").css("display", "block");
+                    $("#divAlertMsgTextUpdateSic").html("Discount updated successfully!");
+                    $("#divAlertBoxUpdateDisc").removeClass("alert alert-danger");
+                    $("#divAlertBoxUpdateDisc").addClass("alert alert-success");
+
+                    setTimeout(function () {
+                        $("#divAlertBoxUpdateDisc").fadeOut("slow", function () {
+                            window.location.assign("/Config");
+                        });
+                    }, 2000);
+                }
+                else
+                {
+                    $("#divAlertBoxUpdateDisc").css("display", "block");
+                    $("#divAlertMsgTextUpdateSic").html("Unable to update discount! Please contact the systems administrator.");
+                    $("#divAlertBoxUpdateDisc").addClass("alert alert-danger");
+                    $("#divAlertBoxUpdateDisc").removeClass("alert alert-success");
+                }
+            })
+            .fail(function () {
+
+            })
+            .always(function () {
+
+            });
+
+    });
+    
+    
+
+    function hexc(colorval) {
+        var parts = colorval.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+        delete (parts[0]);
+        for (var i = 1; i <= 3; ++i) {
+            parts[i] = parseInt(parts[i]).toString(16);
+            if (parts[i].length == 1) parts[i] = '0' + parts[i];
+        }
+        color = '#' + parts.join('');
+    }
+    
+
+    $('#frmAddDisc').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            txtDiscName: {
+                validators: {
+                    notEmpty: {
+                        message: 'Discount description can not be empty'
+                    }
+                }
+            },
+            txtAmountPerc: {
+                validators: {
+                    notEmpty: {
+                        message: 'Amount or % can not be empty'
+                    }
+                }
+            }
+        }
+    });
+    
+
+    $('#frmUpdateVet').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            txtVetUpdateFirstName: {
+                validators: {
+                    notEmpty: {
+                        message: 'Firstname can not be empty'
+                    }
+                }
+            }
+        }
+    });
+
+    $('#frmAddVet').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            txtVetFirstName: {
+                validators: {
+                    notEmpty: {
+                        message: 'Firstname can not be empty'
+                    }
+                }
+            }
+        }
+    });
+
     $('#frmUpdateService').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -703,24 +1040,6 @@
             }
         }
     });
-
-    $('#frmAddService').bootstrapValidator({
-        feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
-        },
-        fields: {
-            txtServiceDesc: {
-                validators: {
-                    notEmpty: {
-                        message: 'Service description can not be empty'
-                    }
-                }
-            }
-        }
-    });
-
 
 
     $('#frmEditUser').bootstrapValidator({
@@ -880,6 +1199,9 @@
             }
         }
     });
+
+
+
 
 
 

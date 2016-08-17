@@ -20,6 +20,8 @@
                 var TelNo = data.AppointmentsResluts[0].TelNo;
                 var Email = data.AppointmentsResluts[0].Email;
                 var Facebook = data.AppointmentsResluts[0].Facebook;
+                var Price = data.AppointmentsResluts[0].Price;
+                var PriceNote = data.AppointmentsResluts[0].PriceNotes;
                 var AppNotes = data.AppointmentsResluts[0].AppNotes;
                 var ServiceIDsArr = data.AppointmentsResluts[0].ServiceIDsArr;
                 var StartTime = data.AppointmentsResluts[0].StartTime;
@@ -34,6 +36,8 @@
                 $("#txtFB").val(Facebook);
                 $("#startDate").val(StartTime);
                 $("#endDate").val(EndDate);
+                $('#txtPrice').val(Price);
+                $('#txtPricenotes').val(PriceNote);
                 $('#txtNotes').val(AppNotes);
                 for (i = 0; i < ServiceIDsArr.length; i++) {
                     $("#chkServiceNails-" + ServiceIDsArr[i]).prop('checked', true);
@@ -72,6 +76,8 @@
 
         var StartDate = $('#startDate').val();
         var EndDate = $('#endDate').val();
+        var Price = $('#txtPrice').val();
+        var txtPricenotes = $('#txtPricenotes').val();
         var AppNote = $("#txtNotes").val();
 
         if (oneSelected == 0) {
@@ -88,7 +94,7 @@
         }
         else {
 
-            var parameters = { AppointmentID: AppointmentID, StartDate: StartDate, EndDate: EndDate, AppNote: AppNote };
+            var parameters = { AppointmentID: AppointmentID, StartDate: StartDate, EndDate: EndDate, AppNote: AppNote, Price: Price, Pricenotes: txtPricenotes };
 
             $.post('/UpdateAppointment', parameters)
                 .done(function (data) {

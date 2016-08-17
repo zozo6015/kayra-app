@@ -29,7 +29,7 @@
                                                 <option value="{{ID}}">{{Breed}}</option>
                                                 {{/each}}
                                             </select>
-                                            
+
                                         </div>
                                         <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
                                         </div>
@@ -75,12 +75,47 @@
                                         <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
                                         </div>
                                     </div>
+
                                     <div class="form-group">
                                         <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
                                             <label for="txtEmail" class="control-label">Email</label>
                                         </div>
                                         <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
                                             <input type="text" class="form-control" name="txtEmail" id="txtEmail" placeholder="Email">
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                            <label for="ddVet" class="control-label">Vet</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
+
+                                            <select class="selectpicker" data-live-search="true" name="ddVet" id="ddVet">
+                                                <option value="-1">Select Vet</option>
+                                                {{#each Vets}}
+                                                <option value="{{ID}}">{{VetFirstname}} {{VetSurname}}</option>
+                                                {{/each}}
+                                            </select>
+
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                            <label for="ddDiscount" class="control-label">Discount</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
+
+                                            <select class="selectpicker" data-live-search="true" name="ddDiscount" id="ddDiscount">
+                                                <option value="-1">Select Discount</option>
+                                                {{#each Disccounts}}
+                                                <option value="{{ID}}">{{DiscountDesc}}</option>
+                                                {{/each}}
+                                            </select>
+
                                         </div>
                                         <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
                                         </div>
@@ -226,8 +261,16 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="txtnotes">Notes:</label>
-                        <textarea class="form-control" rows="5" id="txtnotes"></textarea>
+                        <label for="txtPrice" class="control-label">Price</label>
+                        <input type="text" class="form-control" name="txtPrice" id="txtPrice" placeholder="Price">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtPricenotes">Price Notes:</label>
+                        <textarea class="form-control" rows="3" id="txtPricenotes"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtnotes">Appointment Notes:</label>
+                        <textarea class="form-control" rows="3" id="txtnotes"></textarea>
                     </div>
                     <div class="form-group">
                         <div class="row">
@@ -270,17 +313,23 @@
             <div class="modal-body">
                 <form class="form-Vertical " id="frmHistory" role="form" method="post">
                     <div class="row">
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 Heading">
+                        <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 Heading">
                             Dog Name
                         </div>
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 Heading">
+                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 Heading">
                             Owner
                         </div>
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 Heading">
-                            Appointment Date
+                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 Heading">
+                            Date
                         </div>
-                        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 Heading">
+                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 Heading">
                             Services
+                        </div>
+                        <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 Heading">
+                            Price
+                        </div>
+                        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 Heading">
+                            Price Notes
                         </div>
                     </div>
                     <span id="HistSpan">
@@ -382,6 +431,40 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                            <label for="ddUpdateVet" class="control-label">Vet</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
+
+                                            <select class="selectpicker" data-live-search="true" name="ddUpdateVet" id="ddUpdateVet">
+                                                <option value="-1">Select Vet</option>
+                                                {{#each Vets}}
+                                                <option value="{{ID}}">{{VetFirstname}} {{VetSurname}}</option>
+                                                {{/each}}
+                                            </select>
+
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                                            <label for="ddUpdateDiscount" class="control-label">Discount</label>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
+
+                                            <select class="selectpicker" data-live-search="true" name="ddUpdateDiscount" id="ddUpdateDiscount">
+                                                <option value="-1">Select Discount</option>
+                                                {{#each Disccounts}}
+                                                <option value="{{ID}}">{{DiscountDesc}}</option>
+                                                {{/each}}
+                                            </select>
+
+                                        </div>
+                                        <div class="col-xs-12 col-sm-2 col-md-3 col-lg-3">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
                                             <label for="txtUpdateFB" class="control-label">Facebook</label>
                                         </div>
                                         <div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
@@ -465,30 +548,9 @@
                 <div class="col-xs-12 col-sm-12">
                     <div class="row">
                         <div class="col-xs-12  col-sm-1 col-md-2 col-lg-2">
-                        </div>
-                        <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
-                        </div>
-                        <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
-                        </div>
-                        <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
-
-                        </div>
-                        <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
-
-                        </div>
-                        <div class="col-xs-12  col-sm-3 col-md-2 col-lg-2">
-                            <button type="button" id="btnAddDP" class="btn btn-primary">Add New Profile</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        &nbsp;
-                    </div>
-
-                    <div class="row">
-                        <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
                             <input type="text" class="form-control" name="txtSearchDogName" id="txtSearchDogName" placeholder="Dog Name">
                         </div>
-                        <div class="col-xs-12  col-sm-3 col-md-2 col-lg-2">
+                        <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
                             <select class="selectpicker" data-width="fit" data-live-search="true" name="ddDogBreedSearch" id="ddDogBreedSearch">
                                 <option value="-1">Select dog breed</option>
                                 {{#each Breeds}}
@@ -504,12 +566,42 @@
 
                         </div>
                         <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
-                            <input type="text" class="form-control" name="txtSearchEmail" id="txtSearchEmail" placeholder="Email">
-                        </div>
-                        <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
                             <div style="margin-top:5px;">
                                 <button type="button" id="btnSearchProfile" class="btn btn-primary">Search</button>
                             </div>
+                        </div>
+                        <div class="col-xs-12  col-sm-3 col-md-2 col-lg-2">
+                            
+                        </div>
+                    </div>
+                    <div class="row">
+                        &nbsp;
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
+                            <input type="text" class="form-control" name="txtSearchEmail" id="txtSearchEmail" placeholder="Email">
+                        </div>
+                        <div class="col-xs-12  col-sm-3 col-md-2 col-lg-2">
+                            <select class="selectpicker" data-width="fit" data-live-search="true" name="ddVetSearch" id="ddVetSearch">
+                                <option value="-1">Select Vet</option>
+                                {{#each Vets}}
+                                <option value="{{ID}}">{{VetFirstname}} {{VetSurname}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
+
+                        </div>
+                        <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
+
+
+                        </div>
+                        <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
+
+                        </div>
+                        <div class="col-xs-12  col-sm-2 col-md-2 col-lg-2">
+
                         </div>
                     </div>
                     <div class="row">
@@ -529,52 +621,63 @@
 </form>
 
 <div class="panel panel-primary">
-    <div class="panel-heading"><h3>Dogs</h3></div>
+    <div class="panel-heading">
+        <h3>Dogs</h3>
+        <div style="float:right; margin-top:-40px;"">
+            <button type="button" id="btnAddDP" class="btn btn-info">Add New Profile</button>
+        </div>
+    </div>
     <div class="panel-body">
         <div class="row Heading">
-            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+            <div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
                 Dog Name
             </div>
             <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
                 Bread
             </div>
-            <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
+            <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2">
                 Owner
             </div>
-            <div class="hidden-xs col-sm-2 col-md-2 col-lg-2">
+            <div class="hidden-xs hidden-sm col-sm-2 col-md-2 col-lg-2">
                 Tel No
             </div>
-            <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2">
+            <div class="hidden-xs col-sm-3 col-md-2 col-lg-2">
                 Email
             </div>
-            <div class="hidden-xs col-sm-2 col-md-2 col-lg-2">
+            <div class="hidden-xs hidden-sm col-md-2 col-lg-2">
+                Vet
+            </div>
+            <div class="col-xs-3 col-sm-2 col-md-1 col-lg-1">
                 Action
             </div>
         </div>
         {{#each Dogs}}
         {{#everyOther @index 2 }}
-        <div id="row-{{DogID}}" class="row rowAltColor dogrowclass">
+        <div id="row-{{DogID}}" class="row rowAltColor dogrowclass" style="background-color:{{Color}}">
             {{else}}
-            <div id="row-{{DogID}}" class="row dogrowclass">
+            <div id="row-{{DogID}}" class="row dogrowclass" style="background-color:{{Color}}">
                 {{/everyOther}}
 
-                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
                     {{DogName}}
                     <input type="hidden" name="hidDogProfileDogID" id="hidDogProfileDogID" value="{{DogID}}">
                 </div>
                 <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
                     {{DogBreed}}
                 </div>
-                <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
+                <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2">
                     {{OwnerFirstName}} {{OwnerSurname}}
                 </div>
-                <div class="hidden-xs col-sm-2 col-md-2 col-lg-2">
+                <div class="hidden-xs hidden-sm col-sm-2 col-md-2 col-lg-2">
                     {{TelNo}}
                 </div>
-                <div class="col-xs-4 col-sm-2 col-md-2 col-lg-2">
+                <div class="hidden-xs col-sm-3 col-md-2 col-lg-2">
                     {{Email}}
                 </div>
-                <div class="col-xs-offset-8 col-xs-4 col-sm-offset-0 col-sm-2 col-md-2 col-lg-2">
+                <div class="hidden-xs hidden-sm col-sm-2 col-md-2 col-lg-2">
+                    {{VetFirstName}} {{VetSurname}}
+                </div>
+                <div class="col-xs-3 col-sm-2 col-md-1 col-lg-1">
                     {{#ifCond ../RoleID  0 }}
                     <a href="#" class="LinkAddDogAppointment" id="LinkAddDogAppointment-{{DogID}}">Appoint</a> / <a href="#" class="DogUpdate" id="DogUpdate-{{DogID}}">Upd</a> / <a href="#" class="DogUpdateHist" id="DogHistory-{{DogID}}">Hist</a>
                     {{else}}

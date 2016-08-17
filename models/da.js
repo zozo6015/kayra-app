@@ -130,9 +130,9 @@ function DeleteUser(Username, callback)
     });
 }
 
-function AddDogProfile(DogBreed, DogName, FirstName, Surname, Email, TelNo, FB, Notes, callback) {
+function AddDogProfile(DogBreed, DogName, FirstName, Surname, Email, VetID, DiscountID, TelNo, FB, Notes, callback) {
     pool.getConnection(function (err, connection) {
-        connection.query('CALL SP_AddDogProfile(' + mysql.escape(DogBreed) + ', ' + mysql.escape(DogName) + ', ' + mysql.escape(FirstName) + ', ' + mysql.escape(Surname) + ', ' + mysql.escape(Email) + ', ' + mysql.escape(TelNo) + ', ' + mysql.escape(FB) + ', ' + mysql.escape(Notes) + ')', function (err, rows) {
+        connection.query('CALL SP_AddDogProfile(' + mysql.escape(DogBreed) + ', ' + mysql.escape(DogName) + ', ' + mysql.escape(FirstName) + ', ' + mysql.escape(Surname) + ', ' + mysql.escape(Email) + ', ' + mysql.escape(VetID) + ', ' + mysql.escape(DiscountID) + ', ' + mysql.escape(TelNo) + ', ' + mysql.escape(FB) + ', ' + mysql.escape(Notes) + ')', function (err, rows) {
             if (err) throw err;
             else {
                 callback(rows[0]);
@@ -168,10 +168,10 @@ function GetDogInfo(DogID, callback)
     });
 }
 
-function AddDogApointment(DogID, StartDate, EndDate, AppointmentNotes, callback)
+function AddDogApointment(DogID, StartDate, EndDate, AppointmentNotes, Price, PriceComment, callback)
 {
     pool.getConnection(function (err, connection) {
-        connection.query('CALL SP_AddDogAppointment(' + mysql.escape(DogID) + ', ' + mysql.escape(StartDate) + ', ' + mysql.escape(EndDate) + ', ' + mysql.escape(AppointmentNotes) + ')', function (err, rows) {
+        connection.query('CALL SP_AddDogAppointment(' + mysql.escape(DogID) + ', ' + mysql.escape(StartDate) + ', ' + mysql.escape(EndDate) + ', ' + mysql.escape(AppointmentNotes) + ', ' + mysql.escape(Price) + ', ' + mysql.escape(PriceComment) + ')', function (err, rows) {
             if (err) throw err;
             else {
                 callback(rows[0]);
@@ -206,11 +206,11 @@ function GetAllDogAppointments(callback)
     });
 }
 
-function UpdateAppointment(AppointmentID, StartDate, EndDate, AppNotes, callback)
+function UpdateAppointment(AppointmentID, StartDate, EndDate, AppNotes, Price, PriceNote, callback)
 {
     console.log("heelo");
     pool.getConnection(function (err, connection) {
-        connection.query('CALL SP_UpdateAppointment(' + mysql.escape(AppointmentID) + ', ' + mysql.escape(StartDate) + ', ' + mysql.escape(EndDate) + ', ' + mysql.escape(AppNotes) + ')', function (err, rows) {
+        connection.query('CALL SP_UpdateAppointment(' + mysql.escape(AppointmentID) + ', ' + mysql.escape(StartDate) + ', ' + mysql.escape(EndDate) + ', ' + mysql.escape(AppNotes) + ', ' + mysql.escape(Price) + ', ' + mysql.escape(PriceNote) + ')', function (err, rows) {
             if (err) throw err;
             else {
                 callback(rows[0]);
@@ -220,11 +220,11 @@ function UpdateAppointment(AppointmentID, StartDate, EndDate, AppNotes, callback
     });
 }
 
-function GetAllDogs(DogName, Bread, FirstName, Surname, Email, callback)
+function GetAllDogs(DogName, Bread, FirstName, Surname, Email, VetID, callback)
 {
 
     pool.getConnection(function (err, connection) {
-        connection.query('CALL SP_GetAllDogs(' + mysql.escape(DogName) + ', ' + mysql.escape(Bread) + ', ' + mysql.escape(FirstName) + ', ' + mysql.escape(Surname) + ', ' + mysql.escape(Email) + ')', function (err, rows) {
+        connection.query('CALL SP_GetAllDogs(' + mysql.escape(DogName) + ', ' + mysql.escape(Bread) + ', ' + mysql.escape(FirstName) + ', ' + mysql.escape(Surname) + ', ' + mysql.escape(Email) + ', ' + mysql.escape(VetID) + ')', function (err, rows) {
             if (err) throw err;
             else {
                 callback(rows[0]);
@@ -235,9 +235,9 @@ function GetAllDogs(DogName, Bread, FirstName, Surname, Email, callback)
 
 }
 
-function UpdateDogProfile(DogID, DogBreed, DogName, OwnerFirstName, OwnerSurname, TelNo, Email, Facebook, Notes, callback) {
+function UpdateDogProfile(DogID, DogBreed, DogName, OwnerFirstName, OwnerSurname, TelNo, Email, Vet, Discount, Facebook, Notes, callback) {
     pool.getConnection(function (err, connection) {
-        connection.query('CALL SP_UpdateDogProfile(' + mysql.escape(DogID) + ', ' + mysql.escape(DogBreed) + ', ' + mysql.escape(DogName) + ', ' + mysql.escape(OwnerFirstName) + ', ' + mysql.escape(OwnerSurname) + ', ' + mysql.escape(TelNo) + ', ' + mysql.escape(Email) + ', ' + mysql.escape(Facebook) + ', ' + mysql.escape(Notes) + ')', function (err, rows) {
+        connection.query('CALL SP_UpdateDogProfile(' + mysql.escape(DogID) + ', ' + mysql.escape(DogBreed) + ', ' + mysql.escape(DogName) + ', ' + mysql.escape(OwnerFirstName) + ', ' + mysql.escape(OwnerSurname) + ', ' + mysql.escape(TelNo) + ', ' + mysql.escape(Email) + ', ' + mysql.escape(Vet) + ', ' + mysql.escape(Discount) + ', ' + mysql.escape(Facebook) + ', ' + mysql.escape(Notes) + ')', function (err, rows) {
             if (err) throw err;
             else {
                 callback(rows[0]);
@@ -383,6 +383,98 @@ function AddDogBreed(DogBreed, callback) {
     });
 }
 
+function AddVet(Firstname, Surname, callback) {
+    pool.getConnection(function (err, connection) {
+        connection.query('CALL sp_AddVet(' + mysql.escape(Firstname) + ', ' + mysql.escape(Surname) + ')', function (err, rows) {
+            if (err) throw err;
+            else {
+                callback(rows[0]);
+            }
+        });
+        connection.release();//release the connection
+    });
+}
+
+function GetVets(VetID, callback) {
+    pool.getConnection(function (err, connection) {
+        connection.query('CALL sp_GetVets(' + mysql.escape(VetID) + ')', function (err, rows) {
+            if (err) throw err;
+            else {
+                callback(rows[0]);
+            }
+        });
+        connection.release();//release the connection
+    });
+}
+
+
+function UpdateVet(VetID, Firstname, Surname, callback) {
+    pool.getConnection(function (err, connection) {
+        connection.query('CALL sp_UpdateVet(' + mysql.escape(VetID) + ', ' + mysql.escape(Firstname) + ',' + mysql.escape(Surname) + ')', function (err, rows) {
+            if (err) throw err;
+            else {
+                callback(rows[0]);
+            }
+        });
+        connection.release();//release the connection
+    });
+}
+
+function GetVetByID(VetID, callback) {
+    pool.getConnection(function (err, connection) {
+        connection.query('CALL sp_GetVets(' + mysql.escape(VetID) + ')', function (err, rows) {
+            if (err) throw err;
+            else {
+                callback(rows[0]);
+            }
+        });
+        connection.release();//release the connection
+    });
+}
+
+function AddDiscount(DiscDesc, DiscAmountPerc, color, callback) {
+    pool.getConnection(function (err, connection) {
+        connection.query('CALL sp_AddDiscount(' + mysql.escape(DiscDesc) + ', ' + mysql.escape(DiscAmountPerc) + ', ' + mysql.escape(color) + ')', function (err, rows) {
+            if (err) throw err;
+            else {
+                callback(rows[0]);
+            }
+        });
+        connection.release();//release the connection
+    });
+}
+
+
+function GetDiscount(DiscID, callback) {
+    pool.getConnection(function (err, connection) {
+        connection.query('CALL sp_GetDiscount(' + mysql.escape(DiscID) + ')', function (err, rows) {
+            if (err) throw err;
+            else {
+                callback(rows[0]);
+            }
+        });
+        connection.release();//release the connection
+    });
+}
+
+function UpdateDiscount(DiscID, DiscDesc, DiscAmtPerc, color, callback) {
+    pool.getConnection(function (err, connection) {
+        connection.query('CALL sp_UpdateDiscount(' + mysql.escape(DiscID) + ', ' + mysql.escape(DiscDesc) + ', ' + mysql.escape(DiscAmtPerc) + ', ' + mysql.escape(color) + ')', function (err, rows) {
+            if (err) throw err;
+            else {
+                callback(rows[0]);
+            }
+        });
+        connection.release();//release the connection
+    });
+}
+
+
+
+
+
+
+
 
 
 module.exports = {
@@ -411,5 +503,12 @@ module.exports = {
     GetBreeds: GetBreeds,
     UpdateDogBreed: UpdateDogBreed,
     DeleteDogBreed: DeleteDogBreed,
-    AddDogBreed: AddDogBreed
+    AddDogBreed: AddDogBreed,
+    AddVet: AddVet,
+    GetVets: GetVets,
+    UpdateVet: UpdateVet,
+    GetVetByID: GetVetByID,
+    AddDiscount: AddDiscount,
+    GetDiscount: GetDiscount,
+    UpdateDiscount: UpdateDiscount
 };
