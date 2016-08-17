@@ -376,7 +376,7 @@ router.post('/GetDogImages', Authenticate, function (req, res, next) {
         function (callback) {
             dir.files(dirpath, function (err, files) {
                 if (err) next();
-                console.log(files);
+                console.log("files:", files);
                 DirectoryArray.push(files);
                 callback();
             });
