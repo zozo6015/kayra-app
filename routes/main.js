@@ -361,10 +361,10 @@ router.post('/GetDogImages', Authenticate, function (req, res, next) {
     var DogID = req.param("DogID");
 
 
-    //var dirpath = __dirname + 'public\\images\\DogImages\\' + DogID + '\\';;
-    //dirpath = dirpath.replace("routes", "");
-    //dirpath = dirpath.replace(/\\/g, "\\\\");
-    //dirpath2 = dirpath.replace(/\\\\/g, "\\");
+    var dirpath = __dirname + 'public\\images\\DogImages\\' + DogID + '\\';;
+    dirpath = dirpath.replace("routes", "");
+    dirpath = dirpath.replace(/\\/g, "\\\\");
+    dirpath2 = dirpath.replace(/\\\\/g, "\\");
 
 
     var DirectoryArray = [];
@@ -374,12 +374,12 @@ router.post('/GetDogImages', Authenticate, function (req, res, next) {
 
     async.series([
         function (callback) {
-            callback();
-            //dir.files(dirpath, function (err, files) {
-            //    if (err) next();
-            //    DirectoryArray.push(files);
-            //    callback();
-            //});
+            dir.files(dirpath, function (err, files) {
+                if (err) next();
+                console.log(files);
+                DirectoryArray.push(files);
+                callback();
+            });
         },
         function (callback) {
             //if (DirectoryArray[0]) {
