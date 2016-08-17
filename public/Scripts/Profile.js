@@ -24,6 +24,7 @@
         var Discount = $("#ddDiscount option:selected").val();
         var FB = $("#txtFB").val();
         var Notes = $("#txtNotes").val();
+        var OwnerAddress = $("#txtOwnerAddress").val();
 
         if (DogBreed == '') {
             $("#divAlertBox").css("display", "block");
@@ -57,7 +58,7 @@
 
 
 
-            var parameters = { DogBreed: DogBreed, DogName: DogName, FirstName: FirstName, Surname: Surname, TelNo: TelNo, Email: Email, FB: FB, Notes: Notes, Vet: Vet, Discount: Discount };
+            var parameters = { DogBreed: DogBreed, DogName: DogName, FirstName: FirstName, Surname: Surname, TelNo: TelNo, Email: Email, FB: FB, Notes: Notes, Vet: Vet, Discount: Discount, OwnerAddress: OwnerAddress };
 
             $.post('/AddDogProfile', parameters)
                 .done(function (data) {
@@ -236,6 +237,7 @@
             $('select[name=ddUpdateVet]').val(Result.VetID);
             $('select[name=ddUpdateDiscount]').val(Result.DiscID);
             $('#txtUpdateNotes').val(Result.Notes);
+            $('#txtUpdateOwnerAddress').val(Result.OwnerAddress);
             $('.selectpicker').selectpicker('refresh');
 
             $('#hidUpdateDogID').val(Result.DogID);
@@ -328,6 +330,7 @@
         var Discount = $("#ddUpdateDiscount option:selected").val();
         var Facebook = $('#txtUpdateFB').val();
         var Notes = $('#txtUpdateNotes').val();
+        var OwnerAddress = $('#txtUpdateOwnerAddress').val();
 
 
         if (DogBreed == '') {
@@ -356,7 +359,7 @@
         }
         else {
 
-            var parameters = { DogID: DogID, DogBreed: DogBreed, DogName: DogName, OwnerFirstName: OwnerFirstName, OwnerSurname: OwnerSurname, TelNo: TelNo, Email: Email, Facebook: Facebook, Notes: Notes, Vet: Vet, Discount: Discount };
+            var parameters = { DogID: DogID, DogBreed: DogBreed, DogName: DogName, OwnerFirstName: OwnerFirstName, OwnerSurname: OwnerSurname, TelNo: TelNo, Email: Email, Facebook: Facebook, Notes: Notes, Vet: Vet, Discount: Discount, OwnerAddress: OwnerAddress };
 
             $.post('/UpdateDogProfile', parameters)
             .done(function (data) {

@@ -756,9 +756,10 @@ router.post('/AddDogProfile', Authenticate, function (req, res, next) {
     var TelNo = req.param("TelNo");
     var FB = req.param("FB");
     var Notes = req.param("Notes");
+    var OwnerAddress = req.param("OwnerAddress");
     var locals = {};
 
-    DA.AddDogProfile(DogBreed, DogName, FirstName, Surname, Email, VetID, DiscountID, TelNo, FB, Notes, function (DogProfileAddResluts, err) {
+    DA.AddDogProfile(DogBreed, DogName, FirstName, Surname, Email, VetID, DiscountID, TelNo, FB, Notes, OwnerAddress, function (DogProfileAddResluts, err) {
         locals.Result = DogProfileAddResluts;
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(locals));
@@ -790,10 +791,11 @@ router.post('/UpdateDogProfile', Authenticate, function (req, res, next) {
     var Discount = req.param("Discount");
     var Facebook = req.param("Facebook");
     var Notes = req.param("Notes");
+    var OwnerAddress = req.param("OwnerAddress");
 
     var locals = {};
 
-    DA.UpdateDogProfile(DogID, DogBreed, DogName, OwnerFirstName, OwnerSurname, TelNo, Email, Vet, Discount, Facebook, Notes, function (DogUpdateResluts, err) {
+    DA.UpdateDogProfile(DogID, DogBreed, DogName, OwnerFirstName, OwnerSurname, TelNo, Email, Vet, Discount, Facebook, Notes, OwnerAddress, function (DogUpdateResluts, err) {
         locals.Result = DogUpdateResluts;
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(locals));

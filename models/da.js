@@ -130,9 +130,9 @@ function DeleteUser(Username, callback)
     });
 }
 
-function AddDogProfile(DogBreed, DogName, FirstName, Surname, Email, VetID, DiscountID, TelNo, FB, Notes, callback) {
+function AddDogProfile(DogBreed, DogName, FirstName, Surname, Email, VetID, DiscountID, TelNo, FB, Notes, OwnerAddress, callback) {
     pool.getConnection(function (err, connection) {
-        connection.query('CALL SP_AddDogProfile(' + mysql.escape(DogBreed) + ', ' + mysql.escape(DogName) + ', ' + mysql.escape(FirstName) + ', ' + mysql.escape(Surname) + ', ' + mysql.escape(Email) + ', ' + mysql.escape(VetID) + ', ' + mysql.escape(DiscountID) + ', ' + mysql.escape(TelNo) + ', ' + mysql.escape(FB) + ', ' + mysql.escape(Notes) + ')', function (err, rows) {
+        connection.query('CALL SP_AddDogProfile(' + mysql.escape(DogBreed) + ', ' + mysql.escape(DogName) + ', ' + mysql.escape(FirstName) + ', ' + mysql.escape(Surname) + ', ' + mysql.escape(Email) + ', ' + mysql.escape(VetID) + ', ' + mysql.escape(DiscountID) + ', ' + mysql.escape(TelNo) + ', ' + mysql.escape(FB) + ', ' + mysql.escape(Notes) + ', ' + mysql.escape(OwnerAddress) + ')', function (err, rows) {
             if (err) throw err;
             else {
                 callback(rows[0]);
@@ -235,9 +235,9 @@ function GetAllDogs(DogName, Bread, FirstName, Surname, Email, VetID, callback)
 
 }
 
-function UpdateDogProfile(DogID, DogBreed, DogName, OwnerFirstName, OwnerSurname, TelNo, Email, Vet, Discount, Facebook, Notes, callback) {
+function UpdateDogProfile(DogID, DogBreed, DogName, OwnerFirstName, OwnerSurname, TelNo, Email, Vet, Discount, Facebook, Notes, OwnerAddress, callback) {
     pool.getConnection(function (err, connection) {
-        connection.query('CALL SP_UpdateDogProfile(' + mysql.escape(DogID) + ', ' + mysql.escape(DogBreed) + ', ' + mysql.escape(DogName) + ', ' + mysql.escape(OwnerFirstName) + ', ' + mysql.escape(OwnerSurname) + ', ' + mysql.escape(TelNo) + ', ' + mysql.escape(Email) + ', ' + mysql.escape(Vet) + ', ' + mysql.escape(Discount) + ', ' + mysql.escape(Facebook) + ', ' + mysql.escape(Notes) + ')', function (err, rows) {
+        connection.query('CALL SP_UpdateDogProfile(' + mysql.escape(DogID) + ', ' + mysql.escape(DogBreed) + ', ' + mysql.escape(DogName) + ', ' + mysql.escape(OwnerFirstName) + ', ' + mysql.escape(OwnerSurname) + ', ' + mysql.escape(TelNo) + ', ' + mysql.escape(Email) + ', ' + mysql.escape(Vet) + ', ' + mysql.escape(Discount) + ', ' + mysql.escape(Facebook) + ', ' + mysql.escape(Notes) + ', ' + mysql.escape(OwnerAddress) + ')', function (err, rows) {
             if (err) throw err;
             else {
                 callback(rows[0]);
