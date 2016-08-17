@@ -325,7 +325,6 @@
     });
 
     $('#btnUpdateDogProfile').on("click", function () {
-        console.log("hello");
         var DogID = $('#hidUpdateDogID').val();
         var DogBreed = $("#ddUpdateDogBreed option:selected").val(); 
         var DogName = $('#txtUpdateDogName').val();
@@ -338,12 +337,6 @@
         var Facebook = $('#txtUpdateFB').val();
         var Notes = $('#txtUpdateNotes').val();
         var OwnerAddress = $('#txtUpdateOwnerAddress').val();
-
-        console.log('Vet: ', Vet);
-        console.log('Discount: ', Discount);
-        console.log('OwnerAddress: ', OwnerAddress);
-
-
 
 
         if (DogBreed == '') {
