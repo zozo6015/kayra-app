@@ -361,8 +361,8 @@ router.post('/GetDogImages', Authenticate, function (req, res, next) {
     var DogID = req.param("DogID");
 
 
-    //var dirpath = __dirname + 'public\\images\\DogImages\\' + DogID + '\\';
-    var dirpath = __dirname + 'public/images/DogImages/' + DogID + '\\';
+    var dirpath = __dirname + 'public\\images\\DogImages\\' + DogID + '\\';
+    //var dirpath = __dirname + 'public/images/DogImages/' + DogID + '/';
     dirpath = dirpath.replace("routes", "");
     dirpath = dirpath.replace(/\\/g, "\\\\");
     dirpath2 = dirpath.replace(/\\\\/g, "\\");
