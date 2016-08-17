@@ -366,7 +366,6 @@ router.post('/GetDogImages', Authenticate, function (req, res, next) {
     dirpath = dirpath.replace(/\\/g, "\\\\");
     dirpath2 = dirpath.replace(/\\\\/g, "\\");
 
-    var strRemove = 'C:\Bruce\Websites\SalonKeyra\public';
 
     var DirectoryArray = [];
     var FileArr = [];
@@ -382,19 +381,19 @@ router.post('/GetDogImages', Authenticate, function (req, res, next) {
             });
         },
         function (callback) {
-            if (DirectoryArray[0]) {
-                for (i = 0; i < DirectoryArray.length; i++) {
-                    var filestr = DirectoryArray[i].toString();
-                    FileArr = filestr.split(',');
-                    for (i1 = 0; i1 < FileArr.length; i1++) {
-                        var f = FileArr[i1].replace(dirpath2);
-                        f = f.replace("undefined", "");
-                        f = '\\images\\DogImages\\' + DogID + '\\' + f;
-                        FileArr1.push(f)
-                    }
+            //if (DirectoryArray[0]) {
+            //    for (i = 0; i < DirectoryArray.length; i++) {
+            //        var filestr = DirectoryArray[i].toString();
+            //        FileArr = filestr.split(',');
+            //        for (i1 = 0; i1 < FileArr.length; i1++) {
+            //            var f = FileArr[i1].replace(dirpath2);
+            //            f = f.replace("undefined", "");
+            //            f = '\\images\\DogImages\\' + DogID + '\\' + f;
+            //            FileArr1.push(f)
+            //        }
 
-                }
-            }
+            //    }
+            //}
             callback();
         }
     ],
