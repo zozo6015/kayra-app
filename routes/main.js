@@ -357,53 +357,71 @@ router.post('/uploadImage', Authenticate, function (req, res, next) {
 
 })
 
+
+function checkDirectory(directory, callback) {
+    fs.stat(directory, function (err, stats) {
+        //Check if error defined and the error code is "not exists"
+        if (err && err.errno === 34) {
+            //Create the directory, call the callback.
+            fs.mkdir(directory, callback);
+        } else {
+            //just in case there was a different error:
+            callback(err)
+        }
+    });
+}
+
 router.post('/GetDogImages', Authenticate, function (req, res, next) {
     var DogID = req.param("DogID");
 
 
-    var dirpath = __dirname + 'public\\images\\DogImages\\' + DogID + '\\';
-    //var dirpath = __dirname + 'public/images/DogImages/' + DogID + '/';
+    var dirpath = __dirname + 'public\\images\\DogImages\\' + DogID + '\\';;
     dirpath = dirpath.replace("routes", "");
     dirpath = dirpath.replace(/\\/g, "\\\\");
     dirpath2 = dirpath.replace(/\\\\/g, "\\");
 
+    checkDirectory(dirpath, function (error) {
+        if (error) {
+            console.log("oh no!!!", error);
+        } else {
+            var DirectoryArray = [];
+            var FileArr = [];
+            var FileArr1 = [];
 
-    var DirectoryArray = [];
-    var FileArr = [];
-    var FileArr1 = [];
 
-    console.log("DirPath: ", dirpath);
+            async.series([
+                function (callback) {
+                    dir.files(dirpath, function (err, files) {
+                        if (err) next();
+                        DirectoryArray.push(files);
+                        callback();
+                    });
+                },
+                function (callback) {
+                    if (DirectoryArray[0]) {
+                        for (i = 0; i < DirectoryArray.length; i++) {
+                            var filestr = DirectoryArray[i].toString();
+                            FileArr = filestr.split(',');
+                            for (i1 = 0; i1 < FileArr.length; i1++) {
+                                var f = FileArr[i1].replace(dirpath2);
+                                f = f.replace("undefined", "");
+                                f = '\\images\\DogImages\\' + DogID + '\\' + f;
+                                FileArr1.push(f)
+                            }
 
-    async.series([
-        function (callback) {
-            dir.files(dirpath, function (err, files) {
-                if (err) throw err;
-                console.log("files:", files);
-                DirectoryArray.push(files);
-                callback();
+                        }
+                    }
+                    callback();
+                }
+            ],
+            function (err) {
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify(FileArr1));
             });
-        },
-        function (callback) {
-            //if (DirectoryArray[0]) {
-            //    for (i = 0; i < DirectoryArray.length; i++) {
-            //        var filestr = DirectoryArray[i].toString();
-            //        FileArr = filestr.split(',');
-            //        for (i1 = 0; i1 < FileArr.length; i1++) {
-            //            var f = FileArr[i1].replace(dirpath2);
-            //            f = f.replace("undefined", "");
-            //            f = '\\images\\DogImages\\' + DogID + '\\' + f;
-            //            FileArr1.push(f)
-            //        }
-
-            //    }
-            //}
-            callback();
         }
-    ],
-    function (err) {
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(FileArr1));
     });
+
+    
 
 
 
