@@ -503,10 +503,16 @@ router.get('/SearchDog', Authenticate, function (req, res, next) {
                 locals.Vets = Resluts;
                 callback();
             });
+        },
+        function (callback) {
+            DA.GetDiscount(-1, function (Resluts, err) {
+                locals.Discounts = Resluts;
+                callback();
+            });
         }
     ],
     function (err) {
-        res.render('Admin/Profile', { layout: 'AdminLayout', MenuActive: 'Profile', Services: locals.ServicesResluts, Dogs: locals.Dogs, AppHist: locals.HistResluts, Breeds: locals.Breeds, Vets: locals.Vets, RoleID: req.session.RoleID });
+        res.render('Admin/Profile', { layout: 'AdminLayout', MenuActive: 'Profile', Services: locals.ServicesResluts, Dogs: locals.Dogs, AppHist: locals.HistResluts, Breeds: locals.Breeds, Vets: locals.Vets, Disccounts: locals.Discounts, RoleID: req.session.RoleID });
     });
 
 
